@@ -89,11 +89,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\AGRO_ORGANIZER\\AgroOrganizer_backend\\AgroOrganizer\\AgroOrganizer.csproj",
+      "projectUniqueName": "C:\\Agro-Organizer\\AgroOrganizer_backend\\AgroOrganizer\\AgroOrganizer.csproj",
       "projectName": "AgroOrganizer",
-      "projectPath": "D:\\AGRO_ORGANIZER\\AgroOrganizer_backend\\AgroOrganizer\\AgroOrganizer.csproj",
+      "projectPath": "C:\\Agro-Organizer\\AgroOrganizer_backend\\AgroOrganizer\\AgroOrganizer.csproj",
       "packagesPath": "C:\\Users\\Peter\\.nuget\\packages\\",
-      "outputPath": "D:\\AGRO_ORGANIZER\\AgroOrganizer_backend\\AgroOrganizer\\obj\\",
+      "outputPath": "C:\\Agro-Organizer\\AgroOrganizer_backend\\AgroOrganizer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
