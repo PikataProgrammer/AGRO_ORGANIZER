@@ -10,4 +10,12 @@
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.1"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Models\Dtos\ContractDto\" />
+      <Folder Include="Models\Dtos\DriverDto\" />
+      <Folder Include="Models\Dtos\FieldDto\" />
+      <Folder Include="Models\Dtos\SalesDto\" />
+      <Folder Include="Models\Dtos\UserDto\" />
+    </ItemGroup>
+
 </Project>

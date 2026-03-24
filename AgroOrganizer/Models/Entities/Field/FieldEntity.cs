@@ -1,4 +1,5 @@
-﻿using AgroOrganizer.Models.Enums.CropTypes;
+﻿using AgroOrganizer.Models.Entities.Drivers;
+using AgroOrganizer.Models.Enums.CropTypes;
 using AgroOrganizer.Models.Enums.FieldOperationTypes;
 
 namespace AgroOrganizer.Models.Entities.Field;
@@ -12,13 +13,18 @@ public class FieldEntity
     
     public CropTypes CropType { get; private set; }
     public FieldOperationTypes FieldOperation { get; private set; }
+    public DateTimeOffset? CreatedOn { get; private set; } 
+    
+    public DriverEntity Driver { get; private set; }
 
     public FieldEntity()
     {
         
     }
 
-    public FieldEntity(int fieldId, string fieldName, decimal fieldSize, string fieldLocation, CropTypes cropType, FieldOperationTypes fieldOperation)
+    public FieldEntity(int fieldId, string fieldName, decimal fieldSize, 
+        string fieldLocation, CropTypes cropType, FieldOperationTypes fieldOperation, 
+        DateTimeOffset? createdOn, DriverEntity driver)
     {
         FieldId = fieldId;
         FieldName = fieldName;
@@ -26,5 +32,7 @@ public class FieldEntity
         FieldLocation = fieldLocation;
         CropType = cropType;
         FieldOperation = fieldOperation;
+        CreatedOn = createdOn;
+        Driver = driver;
     }
 }

@@ -8,4 +8,5 @@ public enum CropTypes
     Phacelia = 4,
     Sunflower = 5,
     Corn = 6,
+    None = 7,
 }
