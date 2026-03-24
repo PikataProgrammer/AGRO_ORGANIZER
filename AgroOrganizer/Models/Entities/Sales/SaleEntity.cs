@@ -9,7 +9,7 @@ public class SaleEntity
     public CropTypes CropType { get; private set; }
     public decimal PriceForKg { get; private set; }
     public double Quantity { get; private set; }
-    public decimal TotalPrice { get; private set; }
+    public decimal TotalPrice => PriceForKg *  (decimal)Quantity;
     public string BuyerName { get; private set; }
 
     public SaleEntity()
@@ -18,14 +18,13 @@ public class SaleEntity
     }
 
     public SaleEntity(int saleId, DateTimeOffset dateSigned, CropTypes cropType, decimal priceForKg,
-        double quantity, decimal totalPrice,  string buyerName)
+        double quantity, string buyerName)
     {
         SaleId = saleId;
         DateSigned = dateSigned;
         CropType = cropType;
         PriceForKg = priceForKg;
         Quantity = quantity;
-        TotalPrice = totalPrice;
         BuyerName = buyerName;
     }
 }

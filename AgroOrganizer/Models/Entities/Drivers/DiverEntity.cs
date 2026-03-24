@@ -2,8 +2,8 @@
 
 public class DriverEntity
 {
-    public int DiverId { get; private set; }
-    public string DiverName { get; private set; }
+    public int DriverId { get; private set; }
+    public string DriverName { get; private set; }
     public int DriverAge { get; private set; }
     public string DriverPhoneNumber { get; private set; }
 
@@ -14,15 +14,15 @@ public class DriverEntity
 
     public DriverEntity(int driverId, string diverName, int driverAge, string driverPhoneNumber)
     {
-        DiverId = driverId;
-        DiverName = diverName;
+        DriverId = driverId;
+        DriverName = diverName;
         DriverAge = driverAge;
         DriverPhoneNumber = driverPhoneNumber;
     }
 
     public void Update(string name, int age, string phoneNumber)
     {
-        DiverName = name;
+        DriverName = name;
         DriverAge = age;
         DriverPhoneNumber = phoneNumber;
     }
