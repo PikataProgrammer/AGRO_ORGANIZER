@@ -1,13 +1,11 @@
 ﻿using AgroOrganizer.Models.Entities.Drivers;
-using AgroOrganizer.Models.Entities.Field;
 using AgroOrganizer.Models.Enums.CropTypes;
 using AgroOrganizer.Models.Enums.FieldOperationTypes;
 
 namespace AgroOrganizer.Models.Dtos.FieldDto;
 
-public class FieldDto
+public class CreateFieldRequestDto
 {
-    public int FieldId { get; set; }
     public string FieldName { get;  set; }
     public decimal FieldSize { get;  set; }
     public string FieldLocation { get;  set; }
@@ -17,17 +15,4 @@ public class FieldDto
     public DateTimeOffset? CreatedOn { get; set; } 
     
     public DriverEntity Driver { get; set; }
-
-    public FieldDto(FieldEntity field)
-    {
-        FieldId = field.Id;
-        FieldName = field.FieldName;
-        FieldSize = field.FieldSize;
-        FieldLocation = field.FieldLocation;
-        CropType = field.CropType;
-        FieldOperation = field.FieldOperation;
-        CreatedOn = field.CreatedOn;
-        Driver = field.Driver;
-    }
-
 }

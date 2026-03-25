@@ -2,7 +2,7 @@
 
 public class ContractEntity
 {
-    public int ContractId { get; private set; }
+    public int Id { get; private set; }
     public DateTimeOffset DateSigned { get; private set; }
     public DateTimeOffset? ExpirationDate { get; private set; }
 
@@ -15,7 +15,7 @@ public class ContractEntity
     
     public ContractEntity(int contractId, DateTimeOffset dateSigned, DateTimeOffset? expirationDate, string filePath)
     {
-        ContractId = contractId;
+        Id = contractId;
         DateSigned = dateSigned;
         ExpirationDate = expirationDate;
         FilePath = filePath;

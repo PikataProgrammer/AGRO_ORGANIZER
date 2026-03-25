@@ -11,7 +11,7 @@ public class DriverDto
 
     public DriverDto(DriverEntity driver)
     {
-        DriverId = driver.DriverId;
+        DriverId = driver.Id;
         DriverName = driver.DriverName;
         DriverAge = driver.DriverAge;
         DriverPhoneNumber = driver.DriverPhoneNumber;

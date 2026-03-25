@@ -15,7 +15,7 @@ public class SalesDto
 
     public SalesDto(SaleEntity entity)
     {
-        SaleId = entity.SaleId;
+        SaleId = entity.Id;
         DateSigned = entity.DateSigned;
         CropType = entity.CropType;
         PriceForKg = entity.PriceForKg;

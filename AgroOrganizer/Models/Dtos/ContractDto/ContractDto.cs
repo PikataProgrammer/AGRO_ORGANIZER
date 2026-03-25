@@ -10,7 +10,7 @@ public class ContractDto
 
     public ContractDto(ContractEntity contract)
     {
-        ContractId = contract.ContractId;
+        ContractId = contract.Id;
         DateSigned = contract.DateSigned;
         ExpirationDate = contract.ExpirationDate;
     }

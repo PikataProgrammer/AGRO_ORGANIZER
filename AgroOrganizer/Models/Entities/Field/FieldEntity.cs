@@ -6,7 +6,7 @@ namespace AgroOrganizer.Models.Entities.Field;
 
 public class FieldEntity
 {
-    public int FieldId { get; private set; }
+    public int Id { get; private set; }
     public string FieldName { get; private set; }
     public decimal FieldSize { get; private set; }
     public string FieldLocation { get; private set; }
@@ -26,7 +26,7 @@ public class FieldEntity
         string fieldLocation, CropTypes cropType, FieldOperationTypes fieldOperation, 
         DateTimeOffset? createdOn, DriverEntity driver)
     {
-        FieldId = fieldId;
+        Id = fieldId;
         FieldName = fieldName;
         FieldSize = fieldSize;
         FieldLocation = fieldLocation;

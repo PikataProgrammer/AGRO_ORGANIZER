@@ -1,8 +1,10 @@
-﻿namespace AgroOrganizer.Models.Entities.User;
+﻿using AgroOrganizer.Models.Dtos.UserDto;
+
+namespace AgroOrganizer.Models.Entities.User;
 
 public class UserEntity
 {
-    public int UserId { get; private set; }
+    public int Id { get; private set; }
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
     public string Email { get; private set; }
@@ -16,7 +18,7 @@ public class UserEntity
 
     public UserEntity(int userId, string firstName, string lastName, string email, string paswwordHash, string passwordSalt)
     {
-        UserId = userId;
+        Id = userId;
         FirstName = firstName;
         LastName = lastName;
         Email = email;
@@ -25,11 +27,11 @@ public class UserEntity
         
     }
 
-    public void Update(string firstName, string lastName, string email)
+    public void Update(UpdateUserRequestDto dto)
     {
-        FirstName = firstName;
-        LastName = lastName;
-        Email = email; 
+        FirstName = dto.FirstName;
+        LastName = dto.LastName;
+        Email = dto.Email;
     }
     
 }

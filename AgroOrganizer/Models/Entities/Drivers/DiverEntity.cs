@@ -2,7 +2,7 @@
 
 public class DriverEntity
 {
-    public int DriverId { get; private set; }
+    public int Id { get; private set; }
     public string DriverName { get; private set; }
     public int DriverAge { get; private set; }
     public string DriverPhoneNumber { get; private set; }
@@ -14,7 +14,7 @@ public class DriverEntity
 
     public DriverEntity(int driverId, string diverName, int driverAge, string driverPhoneNumber)
     {
-        DriverId = driverId;
+        Id = driverId;
         DriverName = diverName;
         DriverAge = driverAge;
         DriverPhoneNumber = driverPhoneNumber;

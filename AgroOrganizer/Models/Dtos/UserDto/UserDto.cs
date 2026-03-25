@@ -11,9 +11,10 @@ public class UserDto
 
     public UserDto(UserEntity entity)
     {
-        Id = entity.UserId;
+        Id = entity.Id;
         FirstName = entity.FirstName;
         LastName = entity.LastName;
         Email = entity.Email;
     }
+    
 }
