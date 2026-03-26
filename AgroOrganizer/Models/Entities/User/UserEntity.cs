@@ -10,6 +10,7 @@ public class UserEntity
     public string Email { get; private set; }
     public string PaswwordHash { get; private set; }
     public string PasswordSalt { get; private set; }
+    public bool ShouldChangePassword { get; private set; }
 
     public UserEntity()
     {
@@ -24,7 +25,7 @@ public class UserEntity
         Email = email;
         PaswwordHash = paswwordHash;
         PasswordSalt = passwordSalt;
-        
+        ShouldChangePassword = true;
     }
 
     public void Update(UpdateUserRequestDto dto)
