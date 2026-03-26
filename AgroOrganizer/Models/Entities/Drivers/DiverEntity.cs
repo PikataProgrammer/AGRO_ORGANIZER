@@ -1,4 +1,6 @@
-﻿namespace AgroOrganizer.Models.Entities.Drivers;
+﻿using AgroOrganizer.Models.Dtos.DriverDto;
+
+namespace AgroOrganizer.Models.Entities.Drivers;
 
 public class DriverEntity
 {
@@ -20,10 +22,10 @@ public class DriverEntity
         DriverPhoneNumber = driverPhoneNumber;
     }
 
-    public void Update(string name, int age, string phoneNumber)
+    public void Update(CreateUpdateDriverDto driverEntityModel)
     {
-        DriverName = name;
-        DriverAge = age;
-        DriverPhoneNumber = phoneNumber;
+        DriverName = driverEntityModel.DriverName;
+        DriverAge = driverEntityModel.DriverAge;
+        DriverPhoneNumber = driverEntityModel.DriverPhoneNumber;
     }
 }

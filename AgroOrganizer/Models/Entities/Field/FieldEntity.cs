@@ -1,4 +1,5 @@
-﻿using AgroOrganizer.Models.Entities.Drivers;
+﻿using AgroOrganizer.Models.Dtos.FieldDto;
+using AgroOrganizer.Models.Entities.Drivers;
 using AgroOrganizer.Models.Enums.CropTypes;
 using AgroOrganizer.Models.Enums.FieldOperationTypes;
 
@@ -34,5 +35,15 @@ public class FieldEntity
         FieldOperation = fieldOperation;
         CreatedOn = createdOn;
         Driver = driver;
+    }
+
+    public void Update(CreateFieldRequestDto fieldModelState)
+    {
+        FieldName = fieldModelState.FieldName;
+        FieldSize = fieldModelState.FieldSize;
+        FieldLocation = fieldModelState.FieldLocation;
+        FieldOperation = fieldModelState.FieldOperation;
+        CreatedOn = fieldModelState.CreatedOn;
+        Driver = fieldModelState.Driver;
     }
 }

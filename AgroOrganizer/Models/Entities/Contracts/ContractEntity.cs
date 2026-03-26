@@ -1,4 +1,6 @@
-﻿namespace AgroOrganizer.Models.Entities.Contracts;
+﻿using AgroOrganizer.Models.Dtos.ContractDto;
+
+namespace AgroOrganizer.Models.Entities.Contracts;
 
 public class ContractEntity
 {
@@ -19,5 +21,12 @@ public class ContractEntity
         DateSigned = dateSigned;
         ExpirationDate = expirationDate;
         FilePath = filePath;
+    }
+
+    public void Update(UpdateContractDto dto)
+    {
+        DateSigned = dto.DateSigned;
+        ExpirationDate = dto.ExpirationDate;
+        FilePath = dto.Filepath;
     }
 }
