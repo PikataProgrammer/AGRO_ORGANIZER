@@ -1,6 +1,6 @@
 ﻿using AgroOrganizer.Models.Dtos.SalesDto;
-using AgroOrganizer.Models.Dtos.UserDto;
 using AgroOrganizer.Models.Enums.CropTypes;
+using AgroOrganizer.Models.Entities.FieldSeason;
 
 namespace AgroOrganizer.Models.Entities.Sales;
 
@@ -11,28 +11,29 @@ public class SaleEntity
     public CropTypes CropType { get; private set; }
     public decimal PriceForKg { get; private set; }
     public double Quantity { get; private set; }
-    public decimal TotalPrice => PriceForKg *  (decimal)Quantity;
+    public decimal TotalPrice => PriceForKg * (decimal)Quantity;
     public string BuyerName { get; private set; }
 
-    public SaleEntity()
-    {
-        
-    }
+    public int FieldSeasonId { get; private set; }
+    public FieldSeasonEntity FieldSeason { get; private set; }
 
-    public SaleEntity(int saleId, DateTimeOffset dateSigned, CropTypes cropType, decimal priceForKg,
-        double quantity, string buyerName)
+    public SaleEntity() { }
+
+    public SaleEntity(int id, DateTimeOffset dateSigned, CropTypes cropType, decimal priceForKg, double quantity, string buyerName, FieldSeasonEntity fieldSeason)
     {
-        Id = saleId;
+        Id = id;
         DateSigned = dateSigned;
         CropType = cropType;
         PriceForKg = priceForKg;
         Quantity = quantity;
         BuyerName = buyerName;
+        FieldSeason = fieldSeason;
+        FieldSeasonId = fieldSeason.Id;
     }
 
     public void Update(UpdateSalesRequestDto dto)
     {
-        DateSigned =  dto.DateSigned;
+        DateSigned = dto.DateSigned;
         PriceForKg = dto.PriceForKg;
         Quantity = dto.Quantity;
         BuyerName = dto.BuyerName;

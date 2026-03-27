@@ -1,4 +1,5 @@
 ﻿using AgroOrganizer.Models.Dtos.DriverDto;
+using AgroOrganizer.Models.Entities.Activity;
 
 namespace AgroOrganizer.Models.Entities.Drivers;
 
@@ -8,24 +9,33 @@ public class DriverEntity
     public string DriverName { get; private set; }
     public int DriverAge { get; private set; }
     public string DriverPhoneNumber { get; private set; }
+    public string? LicenseNumber { get; private set; }
+    public DateTimeOffset? HiredOn { get; private set; }
+
+    public ICollection<ActivityEntity> Activities { get; private set; }
 
     public DriverEntity()
     {
-        
+        Activities = new List<ActivityEntity>();
     }
 
-    public DriverEntity(int driverId, string diverName, int driverAge, string driverPhoneNumber)
+    public DriverEntity(int id, string name, int age, string phoneNumber, string? licenseNumber = null, DateTimeOffset? hiredOn = null)
     {
-        Id = driverId;
-        DriverName = diverName;
-        DriverAge = driverAge;
-        DriverPhoneNumber = driverPhoneNumber;
+        Id = id;
+        DriverName = name;
+        DriverAge = age;
+        DriverPhoneNumber = phoneNumber;
+        LicenseNumber = licenseNumber;
+        HiredOn = hiredOn;
+        Activities = new List<ActivityEntity>();
     }
 
-    public void Update(CreateUpdateDriverDto driverEntityModel)
+    public void Update(CreateUpdateDriverDto dto)
     {
-        DriverName = driverEntityModel.DriverName;
-        DriverAge = driverEntityModel.DriverAge;
-        DriverPhoneNumber = driverEntityModel.DriverPhoneNumber;
+        DriverName = dto.DriverName;
+        DriverAge = dto.DriverAge;
+        DriverPhoneNumber = dto.DriverPhoneNumber;
+        LicenseNumber = dto.LicenseNumber;
+        HiredOn = dto.HiredOn;
     }
 }

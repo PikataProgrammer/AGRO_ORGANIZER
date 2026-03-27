@@ -1,7 +1,6 @@
 ﻿using AgroOrganizer.Models.Dtos.FieldDto;
-using AgroOrganizer.Models.Entities.Drivers;
-using AgroOrganizer.Models.Enums.CropTypes;
-using AgroOrganizer.Models.Enums.FieldOperationTypes;
+using AgroOrganizer.Models.Entities.FieldSeason;
+using AgroOrganizer.Models.Entities.User;
 
 namespace AgroOrganizer.Models.Entities.Field;
 
@@ -11,39 +10,34 @@ public class FieldEntity
     public string FieldName { get; private set; }
     public decimal FieldSize { get; private set; }
     public string FieldLocation { get; private set; }
-    
-    public CropTypes CropType { get; private set; }
-    public FieldOperationTypes FieldOperation { get; private set; }
-    public DateTimeOffset? CreatedOn { get; private set; } 
-    
-    public DriverEntity Driver { get; private set; }
+    public DateTimeOffset CreatedOn { get; private set; }
+
+    public int UserId { get; private set; }
+    public UserEntity User { get; private set; }
+
+    public ICollection<FieldSeasonEntity> Seasons { get; private set; }
 
     public FieldEntity()
     {
-        
+        Seasons = new List<FieldSeasonEntity>();
     }
 
-    public FieldEntity(int fieldId, string fieldName, decimal fieldSize, 
-        string fieldLocation, CropTypes cropType, FieldOperationTypes fieldOperation, 
-        DateTimeOffset? createdOn, DriverEntity driver)
+    public FieldEntity(int id, string name, decimal size, string location, DateTimeOffset createdOn, int userId)
     {
-        Id = fieldId;
-        FieldName = fieldName;
-        FieldSize = fieldSize;
-        FieldLocation = fieldLocation;
-        CropType = cropType;
-        FieldOperation = fieldOperation;
+        Id = id;
+        FieldName = name;
+        FieldSize = size;
+        FieldLocation = location;
         CreatedOn = createdOn;
-        Driver = driver;
+        UserId = userId;
+        Seasons = new List<FieldSeasonEntity>();
     }
 
-    public void Update(CreateFieldRequestDto fieldModelState)
+    public void Update(CreateFieldRequestDto dto)
     {
-        FieldName = fieldModelState.FieldName;
-        FieldSize = fieldModelState.FieldSize;
-        FieldLocation = fieldModelState.FieldLocation;
-        FieldOperation = fieldModelState.FieldOperation;
-        CreatedOn = fieldModelState.CreatedOn;
-        Driver = fieldModelState.Driver;
+        FieldName = dto.FieldName;
+        FieldSize = dto.FieldSize;
+        FieldLocation = dto.FieldLocation;
+        CreatedOn = dto.CreatedOn;
     }
 }

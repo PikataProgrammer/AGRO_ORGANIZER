@@ -14,7 +14,6 @@ public class CreateUserDtoValidator : AbstractValidator<CreateUserRequestDto>
         RuleFor(u => u.LastName)
             .NotEmpty().WithMessage("Last name is required")
             .MaximumLength(50).WithMessage("Last name max length is 50 characters");
-
         RuleFor(u => u.Email)
             .NotEmpty().WithMessage("Email is required")
             .EmailAddress().WithMessage("Invalid email format");

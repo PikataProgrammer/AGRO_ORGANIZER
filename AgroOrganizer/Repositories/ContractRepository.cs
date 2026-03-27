@@ -25,7 +25,7 @@ public class ContractRepository : IContractRepository
 
     public async Task<ContractEntity?> GetContractByIdAsync(int id)
     {
-        return await _context.Contracts.FirstOrDefaultAsync(c => c.Id == id);
+        return await _context.Contracts.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
     }
 
     public async Task<ContractEntity> CreateContractAsync(ContractEntity contractEntityModel)

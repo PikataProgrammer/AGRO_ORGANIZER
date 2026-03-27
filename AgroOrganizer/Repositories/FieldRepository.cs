@@ -25,12 +25,12 @@ public class FieldRepository : IFieldRepository
 
     public async Task<FieldEntity?> GetFieldAsync(int id)
     {
-       return await _context.Fields.FirstOrDefaultAsync(x => x.Id == id);
+       return await _context.Fields.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<FieldEntity?> GetFieldByNameAsync(string name)
     {
-        return await _context.Fields.FirstOrDefaultAsync(x => x.FieldName == name);
+        return await _context.Fields.AsNoTracking().FirstOrDefaultAsync(x => x.FieldName == name);
     }
 
     public async Task<FieldEntity> CreateFieldAsync(FieldEntity fieldModelState)

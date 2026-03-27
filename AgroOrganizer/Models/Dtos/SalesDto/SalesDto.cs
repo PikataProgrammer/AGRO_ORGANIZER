@@ -12,6 +12,7 @@ public class SalesDto
     public double Quantity { get;  set; }
     public decimal TotalPrice => PriceForKg *  (decimal)Quantity;
     public string BuyerName { get;  set; }
+    public int FieldSeasonId { get; set; }
 
     public SalesDto(SaleEntity entity)
     {
@@ -21,5 +22,6 @@ public class SalesDto
         PriceForKg = entity.PriceForKg;
         Quantity = entity.Quantity;
         BuyerName = entity.BuyerName;
+        FieldSeasonId = entity.FieldSeasonId;
     }
 }

@@ -26,7 +26,7 @@ public class SaleRepository : ISaleRepository
 
     public async Task<SaleEntity?> GetByIdAsync(int id)
     {
-        return await _context.Sales.FirstOrDefaultAsync(x => x.Id == id);
+        return await _context.Sales.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<SaleEntity> CreateAsync(SaleEntity saleEntityModel)

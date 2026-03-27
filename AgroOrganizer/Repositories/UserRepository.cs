@@ -25,7 +25,7 @@ public class UserRepository : IUserRepository
 
     public async Task<UserEntity?> GetByIdAsync(int id)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+        var user = await _context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         return user;
     }
 
@@ -65,7 +65,7 @@ public class UserRepository : IUserRepository
 
     public async Task<UserEntity?> GetByEmailAsync(string email)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+        var user = await _context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email);
         return user;
     }
 

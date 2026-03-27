@@ -16,17 +16,9 @@ public class CreateFieldDtoValidator : AbstractValidator<FieldDto>
 
         RuleFor(x => x.FieldLocation)
             .NotEmpty().WithMessage("Field location is required.")
-            .MaximumLength(200);
+            .MaximumLength(200).WithMessage("Field location must not exceed 200 characters.");
 
-        RuleFor(x => x.CropType)
-            .IsInEnum().WithMessage("Invalid crop type.");
-
-        RuleFor(x => x.FieldOperation)
-            .IsInEnum().WithMessage("Invalid field operation.");
-
-        RuleFor(x => x.Driver)
-            .NotNull().WithMessage("Driver is required.");
-        
-        RuleFor(x => x.CreatedOn).NotEmpty().WithMessage("The date cannot be empty!");
+        RuleFor(x => x.CreatedOn)
+            .LessThan(DateTimeOffset.Now).WithMessage("Created date cannot be in the future.");
     }
 }

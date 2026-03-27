@@ -9,10 +9,7 @@ public class CreateFieldRequestDto
     public string FieldName { get;  set; }
     public decimal FieldSize { get;  set; }
     public string FieldLocation { get;  set; }
-    
-    public CropTypes CropType { get;  set; }
-    public FieldOperationTypes FieldOperation { get;  set; }
-    public DateTimeOffset? CreatedOn { get; set; } 
-    
-    public DriverEntity Driver { get; set; }
+
+    public DateTimeOffset CreatedOn { get; set; } 
+
 }

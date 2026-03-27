@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace AgroOrganizer.Models.Validation.ContractDtoValidator;
 
-public class ContractDtoValidator : AbstractValidator<ContractDto>
+public class UpdateContractDtoValidator : AbstractValidator<UpdateContractDto>
 {
-    public ContractDtoValidator()
+    public UpdateContractDtoValidator()
     {
         RuleFor(x => x.DateSigned)
             .NotEmpty().WithMessage("The signed date cannot be empty!")
@@ -15,5 +15,9 @@ public class ContractDtoValidator : AbstractValidator<ContractDto>
             .GreaterThan(x => x.DateSigned)
             .When(x => x.ExpirationDate.HasValue)
             .WithMessage("Expiration date must be after the signed date.");
+
+        RuleFor(x => x.FilePath)
+            .NotEmpty().WithMessage("File path is required.")
+            .MaximumLength(500).WithMessage("File path is too long.");
     }
 }

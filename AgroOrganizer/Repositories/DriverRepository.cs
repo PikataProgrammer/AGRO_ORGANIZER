@@ -25,12 +25,12 @@ public class DriverRepository : IDriverRepository
 
     public async Task<DriverEntity?> GetByIdAsync(int id)
     {
-        return await _context.Drivers.FirstOrDefaultAsync(x => x.Id == id);
+        return await _context.Drivers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<DriverEntity?> GetByName(string driverName)
     {
-        return await _context.Drivers.FirstOrDefaultAsync(x => x.DriverName == driverName);
+        return await _context.Drivers.AsNoTracking().FirstOrDefaultAsync(x => x.DriverName == driverName);
     }
 
     public async Task<DriverEntity> CreateAsync(DriverEntity driverEntityModel)
