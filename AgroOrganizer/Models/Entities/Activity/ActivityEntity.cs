@@ -13,23 +13,18 @@ public class ActivityEntity
     public string? Notes { get; private set; }
 
     public int FieldSeasonId { get; private set; }
-    public FieldSeasonEntity FieldSeason { get; private set; }
 
     public int? DriverId { get; private set; }
-    public DriverEntity? Driver { get; private set; }
 
     public ActivityEntity() { }
 
-    public ActivityEntity(int id, FieldOperationTypes type, DateTimeOffset date, FieldSeasonEntity fieldSeason, DriverEntity? driver = null, string? notes = null)
+    public ActivityEntity(CreateActivityDto activityDto )
     {
-        Id = id;
-        Type = type;
-        Date = date;
-        FieldSeason = fieldSeason;
-        FieldSeasonId = fieldSeason.Id;
-        Driver = driver;
-        DriverId = driver?.Id;
-        Notes = notes;
+        Type = activityDto.Type;
+        Date = activityDto.Date;
+        Notes = activityDto.Notes;
+        FieldSeasonId = activityDto.FieldSeasonId;
+        DriverId = activityDto.DriverId;
     }
 
     public void Update(CreateActivityDto dto)

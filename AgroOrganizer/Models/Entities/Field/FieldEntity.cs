@@ -22,13 +22,12 @@ public class FieldEntity
         Seasons = new List<FieldSeasonEntity>();
     }
 
-    public FieldEntity(int id, string name, decimal size, string location, DateTimeOffset createdOn, int userId)
+    public FieldEntity(CreateFieldRequestDto fieldDto, int userId)
     {
-        Id = id;
-        FieldName = name;
-        FieldSize = size;
-        FieldLocation = location;
-        CreatedOn = createdOn;
+        FieldName = fieldDto.FieldName;
+        FieldSize = fieldDto.FieldSize;
+        FieldLocation = fieldDto.FieldLocation;
+        CreatedOn = fieldDto.CreatedOn;
         UserId = userId;
         Seasons = new List<FieldSeasonEntity>();
     }

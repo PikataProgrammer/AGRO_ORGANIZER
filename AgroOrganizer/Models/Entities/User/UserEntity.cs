@@ -20,14 +20,13 @@ public class UserEntity
         Fields = new List<FieldEntity>();
     }
 
-    public UserEntity(int id, string firstName, string lastName, string email, string passwordHash, string passwordSalt)
+    public UserEntity(CreateUserRequestDto dto, string salt, string hashedPassword)
     {
-        Id = id;
-        FirstName = firstName;
-        LastName = lastName;
-        Email = email;
-        PasswordHash = passwordHash;
-        PasswordSalt = passwordSalt;
+        FirstName = dto.FirstName;
+        LastName = dto.LastName;
+        Email = dto.Email;
+        PasswordHash = hashedPassword;
+        PasswordSalt = salt;
         ShouldChangePassword = true;
         Fields = new List<FieldEntity>();
     }

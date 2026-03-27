@@ -17,8 +17,6 @@ public class ActivityRepository : IActivityRepository
     public async Task<List<ActivityEntity>> GetAllAsync(int offset, int limit)
     {
         return await _context.Activities
-            .Include(a => a.Driver)
-            .Include(a => a.FieldSeason)
             .Skip(offset)
             .Take(limit)
             .ToListAsync();
@@ -27,8 +25,6 @@ public class ActivityRepository : IActivityRepository
     public async Task<ActivityEntity?> GetByIdAsync(int id)
     {
         return await _context.Activities
-            .Include(a => a.Driver)
-            .Include(a => a.FieldSeason)
             .AsNoTracking()
             .FirstOrDefaultAsync(a => a.Id == id);
     }

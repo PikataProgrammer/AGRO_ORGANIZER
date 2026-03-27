@@ -19,14 +19,13 @@ public class DriverEntity
         Activities = new List<ActivityEntity>();
     }
 
-    public DriverEntity(int id, string name, int age, string phoneNumber, string? licenseNumber = null, DateTimeOffset? hiredOn = null)
+    public DriverEntity(CreateUpdateDriverDto driverDto)
     {
-        Id = id;
-        DriverName = name;
-        DriverAge = age;
-        DriverPhoneNumber = phoneNumber;
-        LicenseNumber = licenseNumber;
-        HiredOn = hiredOn;
+        DriverName = driverDto.DriverName;
+        DriverAge = driverDto.DriverAge;
+        DriverPhoneNumber = driverDto.DriverPhoneNumber;
+        LicenseNumber = driverDto.LicenseNumber;
+        HiredOn = driverDto.HiredOn;
         Activities = new List<ActivityEntity>();
     }
 

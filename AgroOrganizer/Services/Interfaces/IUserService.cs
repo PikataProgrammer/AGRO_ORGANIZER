@@ -5,9 +5,10 @@ namespace AgroOrganizer.Services.Interfaces;
 
 public interface IUserService
 {
-    Task<List<UserDto>> GetAll(int? limit, int? offset);
-    Task<UserDto?> GetById(uint userId);
+    Task<List<UserDto>> GetAll(int limit, int offset);
+    Task<UserDto?> GetById(int userId);
     Task<UserDto?> CreateUser(CreateUserRequestDto model);
     Task<UserDto?> UpdateUser(UpdateUserRequestDto model, int userId);
-    Task<bool> DeleteUser(uint userId);
+    Task<bool> DeleteUser(int userId);
+    Task<LoginResponseDto> Login(LoginRequestDto loginDto);
 }

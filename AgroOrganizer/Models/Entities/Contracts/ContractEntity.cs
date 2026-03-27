@@ -15,12 +15,11 @@ public class ContractEntity
 
     public ContractEntity() { }
 
-    public ContractEntity(int id, DateTimeOffset dateSigned, DateTimeOffset? expirationDate, string filePath, FieldEntity field)
+    public ContractEntity(UpdateContractDto contractDto, FieldEntity field)
     {
-        Id = id;
-        DateSigned = dateSigned;
-        ExpirationDate = expirationDate;
-        FilePath = filePath;
+        DateSigned = contractDto.DateSigned;
+        ExpirationDate = contractDto.ExpirationDate;
+        FilePath = contractDto.FilePath;
         Field = field;
         FieldId = field.Id;
     }

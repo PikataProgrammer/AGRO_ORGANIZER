@@ -23,7 +23,7 @@ public class FieldRepository : IFieldRepository
             .ToListAsync();
     }
 
-    public async Task<FieldEntity?> GetFieldAsync(int id)
+    public async Task<FieldEntity?> GetFieldByIdAsync(int id)
     {
        return await _context.Fields.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
     }

@@ -15,12 +15,11 @@ public class ExpenseEntity
 
     public ExpenseEntity() { }
 
-    public ExpenseEntity(int id, string type, decimal amount, DateTimeOffset date, FieldSeasonEntity fieldSeason)
+    public ExpenseEntity(CreateExpenseDto expenseDto, FieldSeasonEntity fieldSeason)
     {
-        Id = id;
-        Type = type;
-        Amount = amount;
-        Date = date;
+        Type = expenseDto.Type;
+        Amount = expenseDto.Amount;
+        Date = expenseDto.Date;
         FieldSeason = fieldSeason;
         FieldSeasonId = fieldSeason.Id;
     }

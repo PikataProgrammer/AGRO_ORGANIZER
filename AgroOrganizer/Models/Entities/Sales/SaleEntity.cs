@@ -19,14 +19,13 @@ public class SaleEntity
 
     public SaleEntity() { }
 
-    public SaleEntity(int id, DateTimeOffset dateSigned, CropTypes cropType, decimal priceForKg, double quantity, string buyerName, FieldSeasonEntity fieldSeason)
+    public SaleEntity(UpdateSalesRequestDto requestDto, FieldSeasonEntity fieldSeason)
     {
-        Id = id;
-        DateSigned = dateSigned;
-        CropType = cropType;
-        PriceForKg = priceForKg;
-        Quantity = quantity;
-        BuyerName = buyerName;
+        DateSigned = requestDto.DateSigned;
+        CropType = requestDto.CropType;
+        PriceForKg = requestDto.PriceForKg;
+        Quantity = requestDto.Quantity;
+        BuyerName = requestDto.BuyerName;
         FieldSeason = fieldSeason;
         FieldSeasonId = fieldSeason.Id;
     }
