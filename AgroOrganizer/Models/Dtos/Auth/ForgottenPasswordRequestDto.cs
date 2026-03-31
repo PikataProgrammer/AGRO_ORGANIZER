@@ -2,5 +2,5 @@
 
 public class ForgottenPasswordRequestDto
 {
-    public string? UsernameOrEmail { get; set; }
+    public string? Email { get; set; }
 }

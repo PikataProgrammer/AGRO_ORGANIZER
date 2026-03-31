@@ -37,4 +37,11 @@ public class UserEntity
         LastName = dto.LastName;
         Email = dto.Email;
     }
+
+    public void ChangePassword(string passwordHash, string passwordSalt, bool shouldChangePassword)
+    {
+        PasswordHash = passwordHash;
+        PasswordSalt = passwordSalt;
+        ShouldChangePassword = shouldChangePassword;
+    }
 }

@@ -6,7 +6,7 @@ namespace AgroOrganizer.Services.Auth.Interfaces;
 public interface IAuthService
 {
     Task<LoginResponseDto?> Authenticate(HttpContext context, LoginRequestDto model);
-    Task<LoginResponseDto?> GenerateTokens(HttpContext context, uint userId);
-    Task<bool> ChangePassword(ChangePasswordRequestDto changePasswordRequestDto);
+    Task<LoginResponseDto?> GenerateTokens(HttpContext context, int userId);
+    Task<string> ChangePassword(ChangePasswordRequestDto changePasswordRequestDto);
     Task<bool> ResetPassword(ForgottenPasswordRequestDto forgottenPasswordRequestDto);
 }

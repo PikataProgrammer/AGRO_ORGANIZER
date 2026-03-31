@@ -50,9 +50,17 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "dependencies": {
+            "Carter.Analyzers": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
             "FluentValidation": {
               "target": "Package",
               "version": "[12.1.1, )"
+            },
+            "JwtSecurityTokenCustom": {
+              "target": "Package",
+              "version": "[1.0.0.6, )"
             },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
@@ -70,9 +78,25 @@
               "target": "Package",
               "version": "[10.0.5, )"
             },
+            "Microsoft.IdentityModel.Logging": {
+              "target": "Package",
+              "version": "[8.17.0, )"
+            },
             "MySql.EntityFrameworkCore": {
               "target": "Package",
               "version": "[10.0.1, )"
+            },
+            "Serilog": {
+              "target": "Package",
+              "version": "[4.3.2-dev-02419, )"
+            },
+            "Swashbuckle.AspNetCore.SwaggerGen": {
+              "target": "Package",
+              "version": "[10.1.7, )"
+            },
+            "Swashbuckle.AspNetCore.SwaggerUI": {
+              "target": "Package",
+              "version": "[10.1.7, )"
             },
             "System.Net.Http": {
               "target": "Package",
