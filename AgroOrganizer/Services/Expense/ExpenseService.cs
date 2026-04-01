@@ -31,13 +31,14 @@ public class ExpenseService : IExpenseService
         return new ExpenseDto(expense);
     }
 
-    public async Task<ExpenseDto> CreateAsync(ExpenseEntity entity)
+    public async Task<ExpenseDto> CreateAsync(CreateExpenseDto dto)
     {
-        var expense = await _expenseRepository.CreateAsync(entity);
+        var expenseEntity = new ExpenseEntity(dto);
+        var expense = await _expenseRepository.CreateAsync(expenseEntity);
         return new ExpenseDto(expense);
     }
 
-    public async Task<ExpenseDto?> UpdateAsync(int expenseId, CreateExpenseDto expenseDto)
+    public async Task<ExpenseDto?> UpdateAsync(int expenseId, UpdateExpenseDto expenseDto)
     {
         var updatedExpense = await _expenseRepository.UpdateAsync(expenseId, expenseDto);
         if (updatedExpense == null)

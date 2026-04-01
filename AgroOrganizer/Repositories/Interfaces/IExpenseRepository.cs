@@ -8,7 +8,7 @@ public interface IExpenseRepository
     public Task<List<ExpenseEntity>> GetAllAsync(int offset, int limit);
     public Task<ExpenseEntity?> GetByIdAsync(int id);
     public Task<ExpenseEntity> CreateAsync(ExpenseEntity entity);
-    public Task<ExpenseEntity?> UpdateAsync(int id,  CreateExpenseDto dto);
+    public Task<ExpenseEntity?> UpdateAsync(int id,  UpdateExpenseDto dto);
     public Task<ExpenseEntity?> DeleteAsync(int id);
     public Task SaveChangesAsync();
 }

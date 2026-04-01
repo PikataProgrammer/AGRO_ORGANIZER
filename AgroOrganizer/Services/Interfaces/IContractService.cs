@@ -7,7 +7,7 @@ public interface IContractService
 {
     Task<ContractDto?> GetByIdAsync(int contractId);
     Task<List<ContractDto>> GetAllAsync(int offset, int limit);
-    Task<ContractDto> CreateContractAsync(ContractEntity entity);
+    Task<ContractDto> CreateContractAsync(CreateContractDto dto);
     Task<ContractDto?> UpdateContractAsync(int contractId, UpdateContractDto dto);
     Task<bool> DeleteContractAsync(int contractId);
 }

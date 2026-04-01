@@ -30,9 +30,10 @@ public class ActivityService : IActivityService
         return new ActivityDto(activity);
     }
 
-    public async Task<ActivityDto> CreateAsync(ActivityEntity entity)
+    public async Task<ActivityDto> CreateAsync(CreateActivityDto dto)
     {
-        var createdActivity = await _activityRepository.CreateAsync(entity);
+        var activityEntity = new ActivityEntity(dto);
+        var createdActivity = await _activityRepository.CreateAsync(activityEntity);
         return new ActivityDto(createdActivity);
     }
 

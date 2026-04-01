@@ -30,9 +30,10 @@ public class FieldService : IFieldService
         return fields.Select(f => new FieldDto(f)).ToList();
     }
 
-    public async Task<FieldDto> CreateFieldAsync(FieldEntity entity)
+    public async Task<FieldDto> CreateFieldAsync(CreateFieldRequestDto dto)
     {
-        var createdField = await _fieldRepository.CreateFieldAsync(entity);
+        var fieldEntity = new FieldEntity(dto);
+        var createdField = await _fieldRepository.CreateFieldAsync(fieldEntity);
         return new FieldDto(createdField);
     }
 

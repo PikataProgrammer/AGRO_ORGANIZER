@@ -15,19 +15,21 @@ public class ExpenseEntity
 
     public ExpenseEntity() { }
 
-    public ExpenseEntity(CreateExpenseDto expenseDto, FieldSeasonEntity fieldSeason)
+    public ExpenseEntity(CreateExpenseDto expenseDto)
     {
         Type = expenseDto.Type;
         Amount = expenseDto.Amount;
         Date = expenseDto.Date;
-        FieldSeason = fieldSeason;
-        FieldSeasonId = fieldSeason.Id;
+        FieldSeason = expenseDto.FieldSeason;
+        FieldSeasonId = expenseDto.FieldSeasonId ;
     }
 
-    public void Update(CreateExpenseDto dto)
+    public void Update(UpdateExpenseDto dto)
     {
         Type = dto.Type;
         Amount = dto.Amount;
         Date = dto.Date;
+        FieldSeason = dto.FieldSeason;
+        FieldSeasonId = dto.FieldSeasonId;
     }
 }

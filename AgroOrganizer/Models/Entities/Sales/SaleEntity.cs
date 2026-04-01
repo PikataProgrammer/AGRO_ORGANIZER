@@ -19,22 +19,25 @@ public class SaleEntity
 
     public SaleEntity() { }
 
-    public SaleEntity(UpdateSalesRequestDto requestDto, FieldSeasonEntity fieldSeason)
+    public SaleEntity(UpdateSalesRequestDto requestDto)
     {
         DateSigned = requestDto.DateSigned;
         CropType = requestDto.CropType;
         PriceForKg = requestDto.PriceForKg;
         Quantity = requestDto.Quantity;
         BuyerName = requestDto.BuyerName;
-        FieldSeason = fieldSeason;
-        FieldSeasonId = fieldSeason.Id;
+        FieldSeason = requestDto.FieldSeason;
+        FieldSeasonId = requestDto.FieldSeasonId;
     }
 
     public void Update(UpdateSalesRequestDto dto)
     {
         DateSigned = dto.DateSigned;
+        CropType = dto.CropType;
         PriceForKg = dto.PriceForKg;
         Quantity = dto.Quantity;
         BuyerName = dto.BuyerName;
+        FieldSeason = dto.FieldSeason;
+        FieldSeasonId = dto.FieldSeasonId;
     }
 }

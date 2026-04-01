@@ -1,4 +1,5 @@
-﻿using AgroOrganizer.Models.Enums.CropTypes;
+﻿using AgroOrganizer.Models.Entities.FieldSeason;
+using AgroOrganizer.Models.Enums.CropTypes;
 
 namespace AgroOrganizer.Models.Dtos.SalesDto;
 
@@ -9,4 +10,6 @@ public class UpdateSalesRequestDto
     public decimal PriceForKg { get;  set; }
     public double Quantity { get;  set; }
     public string BuyerName { get;  set; }
+    public int FieldSeasonId { get; set; }
+    public FieldSeasonEntity FieldSeason { get; set; }
 }

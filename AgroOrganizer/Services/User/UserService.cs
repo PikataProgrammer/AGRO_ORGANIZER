@@ -2,9 +2,10 @@
 using AgroOrganizer.Models.Dtos.UserDto;
 using AgroOrganizer.Models.Entities.User;
 using AgroOrganizer.Models.ErrorHandling.CustomExceptions;
-using AgroOrganizer.Models.PasswordHasher;
+using AgroOrganizer.Models.PasswordHasher.Interface;
 using AgroOrganizer.Repositories.Interfaces;
 using AgroOrganizer.Services.Interfaces;
+
 
 namespace AgroOrganizer.Services;
 
@@ -12,9 +13,9 @@ public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
     private readonly IConfiguration _configuration;
-    private readonly PasswordHasher _passwordHasher;
+    private readonly IPasswordHasher _passwordHasher;
 
-    public UserService(IUserRepository userRepository, IConfiguration configuration, PasswordHasher passwordHasher)
+    public UserService(IUserRepository userRepository, IConfiguration configuration, IPasswordHasher passwordHasher)
     {
         _userRepository = userRepository;
         _configuration = configuration;
@@ -92,27 +93,5 @@ public class UserService : IUserService
         }
 
         return true;
-    }
-
-    public async Task<LoginResponseDto> Login(LoginRequestDto loginDto)
-    {
-        var user = await _userRepository.GetByEmailAsync(loginDto.Email);
-
-        if (user == null)
-        {
-            throw new UnauthorizedException("Invalid email or password");
-        }
-
-        var isValid = _passwordHasher.Verify(
-            loginDto.Password,
-            user.PasswordHash,
-            user.PasswordSalt);
-        
-        if (!isValid)
-        {
-            throw new UnauthorizedException("Invalid email or password");
-        }
-        
-        return new LoginResponseDto(user);
     }
 }

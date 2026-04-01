@@ -7,7 +7,7 @@ public interface IFieldService
 {
     Task<FieldDto?> GetByIdAsync(int fieldId);
     Task<List<FieldDto>> GetAllAsync(int offset, int limit);
-    Task<FieldDto> CreateFieldAsync(FieldEntity entity);
+    Task<FieldDto> CreateFieldAsync(CreateFieldRequestDto dto);
     Task<FieldDto?> UpdateFieldAsync(int fieldId, CreateFieldRequestDto fieldDto);
     Task<bool> DeleteFieldAsync(int fieldId);
 }

@@ -33,5 +33,6 @@ public class ActivityEntity
         Date = dto.Date;
         Notes = dto.Notes;
         DriverId = dto.DriverId;
+        FieldSeasonId = dto.FieldSeasonId;
     }
 }

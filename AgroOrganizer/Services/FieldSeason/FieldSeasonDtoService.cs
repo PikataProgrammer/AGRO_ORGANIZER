@@ -30,9 +30,10 @@ public class FieldSeasonDtoService : IFieldSeasonService
         return new FieldSeasonDto(fieldSeason);
     }
 
-    public async Task<FieldSeasonDto> CreateAsync(FieldSeasonEntity entity)
+    public async Task<FieldSeasonDto> CreateAsync(CreateFieldSeasonDto dto)
     {
-        var createdField = await _fieldSeasonRepository.CreateAsync(entity);
+        var fieldEntity = new FieldSeasonEntity(dto);
+        var createdField = await _fieldSeasonRepository.CreateAsync(fieldEntity);
         return new FieldSeasonDto(createdField);
     }
 

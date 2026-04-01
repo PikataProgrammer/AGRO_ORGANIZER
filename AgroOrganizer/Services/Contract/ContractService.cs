@@ -32,9 +32,10 @@ public class ContractService : IContractService
         return contracts.Select(c => new ContractDto(c)).ToList();
     }
 
-    public async Task<ContractDto> CreateContractAsync(ContractEntity entity)
+    public async Task<ContractDto> CreateContractAsync(CreateContractDto dto)
     {
-        var created = await _contractRepository.CreateContractAsync(entity);
+        var contractEntity = new ContractEntity(dto);
+        var created = await _contractRepository.CreateContractAsync(contractEntity);
         return new ContractDto(created);
     }
 

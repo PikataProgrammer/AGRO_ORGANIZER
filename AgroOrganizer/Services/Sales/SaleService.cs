@@ -31,9 +31,10 @@ public class SaleService : ISaleService
         return sales.Select(s => new SalesDto(s)).ToList();
     }
 
-    public async Task<SalesDto> CreateSaleAsync(SaleEntity entity)
+    public async Task<SalesDto> CreateSaleAsync(UpdateSalesRequestDto dto)
     {
-        var created = await _saleRepository.CreateAsync(entity);
+        var saleEntity = new SaleEntity(dto);
+        var created = await _saleRepository.CreateAsync(saleEntity);
         return new SalesDto(created);
     }
 

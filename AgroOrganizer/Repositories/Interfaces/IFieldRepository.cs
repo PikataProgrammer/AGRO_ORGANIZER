@@ -8,8 +8,7 @@ public interface IFieldRepository
 {
     public Task<List<FieldEntity>> GetAllAsync(int offset, int limit);
     public Task<FieldEntity?> GetFieldByIdAsync(int id);
-    public Task<FieldEntity?> GetFieldByNameAsync(string name);
-    public Task<FieldEntity> CreateFieldAsync(FieldEntity fieldModelState);
+    public Task<FieldEntity> CreateFieldAsync(FieldEntity entity);
     public Task<FieldEntity?> UpdateFieldAsync(int id, CreateFieldRequestDto fieldModelState);
     public Task<FieldEntity?> DeleteFieldAsync(int id);
     public Task SaveChangesAsync();

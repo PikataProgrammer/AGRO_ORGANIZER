@@ -39,7 +39,7 @@ public class ExpenseRepository : IExpenseRepository
         return expense;
     }
 
-    public async Task<ExpenseEntity?> UpdateAsync(int id, CreateExpenseDto dto)
+    public async Task<ExpenseEntity?> UpdateAsync(int id, UpdateExpenseDto dto)
     {
         var expense = await _context.Expenses.FirstOrDefaultAsync(e => e.Id == id);
         if (expense == null) return null;

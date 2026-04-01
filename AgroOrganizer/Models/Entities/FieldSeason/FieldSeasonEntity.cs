@@ -27,12 +27,12 @@ public class FieldSeasonEntity
         Expenses = new List<ExpenseEntity>();
     }
 
-    public FieldSeasonEntity(CreateFieldSeasonDto seasonDto, FieldEntity field)
+    public FieldSeasonEntity(CreateFieldSeasonDto seasonDto)
     {
         Year = seasonDto.Year;
         CropType = seasonDto.CropType;
-        Field = field;
-        FieldId = field.Id;
+        Field = seasonDto.Field;
+        FieldId = seasonDto.FieldId;
         Activities = new List<ActivityEntity>();
         Sales = new List<SaleEntity>();
         Expenses = new List<ExpenseEntity>();
@@ -42,5 +42,7 @@ public class FieldSeasonEntity
     {
         Year = dto.Year;
         CropType = dto.CropType;
+        FieldId = dto.FieldId;
+        Field = dto.Field;
     }
 }

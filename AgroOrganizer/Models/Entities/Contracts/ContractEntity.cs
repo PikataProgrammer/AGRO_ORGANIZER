@@ -15,13 +15,13 @@ public class ContractEntity
 
     public ContractEntity() { }
 
-    public ContractEntity(UpdateContractDto contractDto, FieldEntity field)
+    public ContractEntity(CreateContractDto contractDto)
     {
         DateSigned = contractDto.DateSigned;
         ExpirationDate = contractDto.ExpirationDate;
         FilePath = contractDto.FilePath;
-        Field = field;
-        FieldId = field.Id;
+        Field = contractDto.Field;
+        FieldId = contractDto.FieldId;
     }
 
     public void Update(UpdateContractDto dto)
@@ -29,5 +29,7 @@ public class ContractEntity
         DateSigned = dto.DateSigned;
         ExpirationDate = dto.ExpirationDate;
         FilePath = dto.FilePath;
+        FieldId = dto.FieldId;
+        Field = dto.Field;
     }
 }

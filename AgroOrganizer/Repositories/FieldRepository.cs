@@ -27,11 +27,7 @@ public class FieldRepository : IFieldRepository
     {
        return await _context.Fields.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
     }
-
-    public async Task<FieldEntity?> GetFieldByNameAsync(string name)
-    {
-        return await _context.Fields.AsNoTracking().FirstOrDefaultAsync(x => x.FieldName == name);
-    }
+    
 
     public async Task<FieldEntity> CreateFieldAsync(FieldEntity fieldModelState)
     {

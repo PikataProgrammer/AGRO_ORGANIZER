@@ -22,13 +22,13 @@ public class FieldEntity
         Seasons = new List<FieldSeasonEntity>();
     }
 
-    public FieldEntity(CreateFieldRequestDto fieldDto, int userId)
+    public FieldEntity(CreateFieldRequestDto fieldDto)
     {
         FieldName = fieldDto.FieldName;
         FieldSize = fieldDto.FieldSize;
         FieldLocation = fieldDto.FieldLocation;
         CreatedOn = fieldDto.CreatedOn;
-        UserId = userId;
+        UserId = fieldDto.UserId;
         Seasons = new List<FieldSeasonEntity>();
     }
 
@@ -38,5 +38,6 @@ public class FieldEntity
         FieldSize = dto.FieldSize;
         FieldLocation = dto.FieldLocation;
         CreatedOn = dto.CreatedOn;
+        UserId = dto.UserId;
     }
 }
