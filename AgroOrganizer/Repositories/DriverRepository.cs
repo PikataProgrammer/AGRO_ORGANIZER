@@ -17,6 +17,8 @@ public class DriverRepository : IDriverRepository
     public async Task<List<DriverEntity>> GetAllAsync(int offset, int limit)
     {
         return await _context.Drivers
+            .Include(x => x.Activities)
+            .AsNoTracking()
             .Skip(offset)
             .Take(limit)
             .OrderBy(x => x.DriverName)
@@ -25,12 +27,12 @@ public class DriverRepository : IDriverRepository
 
     public async Task<DriverEntity?> GetByIdAsync(int id)
     {
-        return await _context.Drivers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        return await _context.Drivers.Include(d => d.Activities).AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<DriverEntity?> GetByName(string driverName)
     {
-        return await _context.Drivers.AsNoTracking().FirstOrDefaultAsync(x => x.DriverName == driverName);
+        return await _context.Drivers.Include(x => x.Activities).AsNoTracking().FirstOrDefaultAsync(x => x.DriverName == driverName);
     }
 
     public async Task<DriverEntity> CreateAsync(DriverEntity driverEntityModel)

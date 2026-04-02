@@ -1,4 +1,5 @@
-﻿using AgroOrganizer.Models.Dtos.ContractDto;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using AgroOrganizer.Models.Dtos.ContractDto;
 using AgroOrganizer.Models.Entities.Field;
 
 namespace AgroOrganizer.Models.Entities.Contracts;
@@ -11,6 +12,7 @@ public class ContractEntity
     public string FilePath { get; private set; }
 
     public int FieldId { get; private set; }
+    [ForeignKey("FieldId")]
     public FieldEntity Field { get; private set; }
 
     public ContractEntity() { }
@@ -20,7 +22,6 @@ public class ContractEntity
         DateSigned = contractDto.DateSigned;
         ExpirationDate = contractDto.ExpirationDate;
         FilePath = contractDto.FilePath;
-        Field = contractDto.Field;
         FieldId = contractDto.FieldId;
     }
 
@@ -30,6 +31,5 @@ public class ContractEntity
         ExpirationDate = dto.ExpirationDate;
         FilePath = dto.FilePath;
         FieldId = dto.FieldId;
-        Field = dto.Field;
     }
 }

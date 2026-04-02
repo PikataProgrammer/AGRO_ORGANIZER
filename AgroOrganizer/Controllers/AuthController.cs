@@ -14,7 +14,7 @@ public class AuthController
         {
             var result = await service.Authenticate(context, dto);
             return result is null ? Results.Unauthorized() : Results.Ok(result);
-        });
+        }).WithName("Login").WithTags("Auth");
 
         app.MapPost(baseRoute + "/refresh", async (IAuthService service, HttpContext context, ClaimsPrincipal user) =>
         {
@@ -26,17 +26,17 @@ public class AuthController
 
             var result = await service.GenerateTokens(context, int.Parse(userId));
             return Results.Ok(result);
-        });
+        }).WithName("GenerateTokens").WithTags("Auth");
 
         app.MapPost(baseRoute + "/change-password", async (IAuthService service, ChangePasswordRequestDto dto) =>
         {
             return Results.Ok(await service.ChangePassword(dto));
-        });
+        }).WithName("ChangePassword").WithTags("Auth");
 
         app.MapPost(baseRoute + "/reset-password", async (IAuthService  service, ForgottenPasswordRequestDto dto) =>
         {
             return Results.Ok(await service.ResetPassword(dto));
-        });
+        }).WithName("ResetPassword").WithTags("Auth");
         
         return app;
     }

@@ -17,9 +17,10 @@ public class FieldSeasonRepository : IFieldSeasonRepository
     public async Task<List<FieldSeasonEntity>> GetAllAsync(int offset, int limit)
     {
         return await _context.FieldSeasons
-            .Include(fs => fs.Field)
             .Include(fs => fs.Activities)
+            .ThenInclude(a => a.Driver)
             .Include(fs => fs.Sales)
+            .Include(fs => fs.Expenses)
             .Skip(offset)
             .Take(limit)
             .ToListAsync();
@@ -31,6 +32,7 @@ public class FieldSeasonRepository : IFieldSeasonRepository
         return await _context.FieldSeasons
             .Include(fs => fs.Field)
             .Include(fs => fs.Activities)
+            .ThenInclude(a => a.Driver)
             .Include(fs => fs.Sales)
             .AsNoTracking()
             .FirstOrDefaultAsync(fs => fs.Id == id);

@@ -12,6 +12,5 @@ public class CreateFieldSeasonDto
     public CropTypes CropType { get; set; }
 
     public int FieldId { get;  set; }
-    public FieldEntity Field { get; set; }
     
 }

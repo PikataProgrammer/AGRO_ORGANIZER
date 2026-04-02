@@ -26,7 +26,6 @@ public class SaleEntity
         PriceForKg = requestDto.PriceForKg;
         Quantity = requestDto.Quantity;
         BuyerName = requestDto.BuyerName;
-        FieldSeason = requestDto.FieldSeason;
         FieldSeasonId = requestDto.FieldSeasonId;
     }
 
@@ -37,7 +36,6 @@ public class SaleEntity
         PriceForKg = dto.PriceForKg;
         Quantity = dto.Quantity;
         BuyerName = dto.BuyerName;
-        FieldSeason = dto.FieldSeason;
         FieldSeasonId = dto.FieldSeasonId;
     }
 }

@@ -128,15 +128,19 @@ public class AuthService : IAuthService
             var clientSalt = userEntity.PasswordSalt;
             var clientHash = userEntity.PasswordHash;
         
-            var passwordCorrect = _passwordHasher.Verify(changePasswordRequestDto.NewPassword, clientHash, clientSalt);
-            if (!passwordCorrect)
+            Log.Information("Before change -> Hash: {Hash}, Salt: {Salt}", userEntity.PasswordHash, userEntity.PasswordSalt);
+            
+            var oldPasswordCorrect = _passwordHasher.Verify(changePasswordRequestDto.OldPassword, clientHash, clientSalt);
+            if (!oldPasswordCorrect)
             {
-                throw new BadRequestException("Could not change password");
+                throw new BadRequestException("Old password is incorrect.");
             }
         
             //Change password
             (string newHashString, string newSaltString ) = _passwordHasher.Hash(changePasswordRequestDto.NewPassword);
-        
+            Log.Information("New password hash: {Hash}, salt: {Salt}", newHashString, newSaltString);
+            
+            
             userEntity.ChangePassword(newHashString, newSaltString, false);
         
             await _context.SaveChangesAsync();

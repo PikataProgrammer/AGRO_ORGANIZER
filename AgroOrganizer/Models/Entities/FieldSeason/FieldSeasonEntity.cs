@@ -31,7 +31,6 @@ public class FieldSeasonEntity
     {
         Year = seasonDto.Year;
         CropType = seasonDto.CropType;
-        Field = seasonDto.Field;
         FieldId = seasonDto.FieldId;
         Activities = new List<ActivityEntity>();
         Sales = new List<SaleEntity>();
@@ -43,6 +42,5 @@ public class FieldSeasonEntity
         Year = dto.Year;
         CropType = dto.CropType;
         FieldId = dto.FieldId;
-        Field = dto.Field;
     }
 }

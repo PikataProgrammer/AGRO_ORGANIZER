@@ -13,7 +13,8 @@ public class ActivityEntity
     public string? Notes { get; private set; }
 
     public int FieldSeasonId { get; private set; }
-
+    public FieldSeasonEntity? FieldSeason { get; private set; }
+    public DriverEntity? Driver { get; private set; }
     public int? DriverId { get; private set; }
 
     public ActivityEntity() { }

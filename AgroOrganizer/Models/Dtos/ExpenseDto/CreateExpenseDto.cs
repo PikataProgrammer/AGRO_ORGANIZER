@@ -8,6 +8,5 @@ public class CreateExpenseDto
     public decimal Amount { get; set; }
     public DateTimeOffset Date { get; set; }
     public int FieldSeasonId { get; set; }
-    public FieldSeasonEntity FieldSeason { get;  set; }
 
 }

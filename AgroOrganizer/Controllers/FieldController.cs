@@ -8,20 +8,20 @@ public class FieldController
 {
     public static WebApplication SetUpFieldRoutes(WebApplication app, string baseRoute)
     {
-        app.MapGet("/", async (IFieldService service, int offset = 0, int limit = 10)
-            => Results.Ok(await service.GetAllAsync(offset, limit)));
+        app.MapGet(baseRoute + "/", async (IFieldService service, int offset = 0, int limit = 10)
+            => Results.Ok(await service.GetAllAsync(offset, limit))).WithName("GetAllFields").WithTags("Field");
 
-        app.MapGet("/{id:int}", async (IFieldService service, int id)
-            => Results.Ok(await service.GetByIdAsync(id)));
+        app.MapGet(baseRoute + "/{id:int}", async (IFieldService service, int id)
+            => Results.Ok(await service.GetByIdAsync(id))).WithName("GetFieldById").WithTags("Field");
 
-        app.MapPost("/", async (IFieldService service, CreateFieldRequestDto dto)
-            => Results.Ok(await service.CreateFieldAsync(dto)));
+        app.MapPost(baseRoute + "/", async (IFieldService service, CreateFieldRequestDto dto)
+            => Results.Ok(await service.CreateFieldAsync(dto))).WithName("CreateField").WithTags("Field");
 
-        app.MapPut("/{id:int}", async (IFieldService service, int id, CreateFieldRequestDto dto)
-            => Results.Ok(await service.UpdateFieldAsync(id, dto)));
+        app.MapPut(baseRoute + "/{id:int}", async (IFieldService service, int id, CreateFieldRequestDto dto)
+            => Results.Ok(await service.UpdateFieldAsync(id, dto))).WithName("UpdateField").WithTags("Field");
 
-        app.MapDelete("/{id:int}", async (IFieldService service, int id)
-            => Results.Ok(await service.DeleteFieldAsync(id)));
+        app.MapDelete(baseRoute + "/{id:int}", async (IFieldService service, int id)
+            => Results.Ok(await service.DeleteFieldAsync(id))).WithName("DeleteField").WithTags("Field");
         
         return app;
     }

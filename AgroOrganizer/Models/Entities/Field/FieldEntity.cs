@@ -1,4 +1,6 @@
-﻿using AgroOrganizer.Models.Dtos.FieldDto;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using AgroOrganizer.Models.Dtos.FieldDto;
+using AgroOrganizer.Models.Entities.Contracts;
 using AgroOrganizer.Models.Entities.FieldSeason;
 using AgroOrganizer.Models.Entities.User;
 
@@ -13,7 +15,10 @@ public class FieldEntity
     public DateTimeOffset CreatedOn { get; private set; }
 
     public int UserId { get; private set; }
+    [ForeignKey("UserId")]
     public UserEntity User { get; private set; }
+    
+    public ContractEntity? Contract { get; private set; }
 
     public ICollection<FieldSeasonEntity> Seasons { get; private set; }
 

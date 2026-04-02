@@ -9,5 +9,4 @@ public class CreateContractDto
     public string FilePath { get; set; }
 
     public int FieldId { get; set; }
-    public FieldEntity Field { get; set; }
 }

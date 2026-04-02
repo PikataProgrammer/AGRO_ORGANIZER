@@ -8,5 +8,4 @@ public class UpdateContractDto
     public DateTimeOffset? ExpirationDate { get; set; }
     public string FilePath { get; set; }
     public int FieldId { get; set; }
-    public FieldEntity Field { get; set; }
 }

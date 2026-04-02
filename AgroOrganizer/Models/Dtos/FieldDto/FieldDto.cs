@@ -15,7 +15,8 @@ public class FieldDto
     public string FieldLocation { get;  set; }
     
     public DateTimeOffset? CreatedOn { get; set; } 
-    public ICollection<FieldSeasonEntity> Seasons { get; set; }
+    public ContractDto.ContractDto? Contract { get; set; }
+    public ICollection<FieldSeasonDto.FieldSeasonDto> Seasons { get; set; }
     public int? UserId { get; set; }
 
     public FieldDto(FieldEntity field)
@@ -24,9 +25,17 @@ public class FieldDto
         FieldName = field.FieldName;
         FieldSize = field.FieldSize;
         FieldLocation = field.FieldLocation;
-        Seasons = field.Seasons;
         UserId = field.UserId;
         CreatedOn = field.CreatedOn;
+        Seasons = new List<FieldSeasonDto.FieldSeasonDto>();
+        foreach (var season in field.Seasons)
+        {
+            Seasons.Add(new FieldSeasonDto.FieldSeasonDto(season));
+        }
+        if (field.Contract != null)
+        {
+            Contract = new ContractDto.ContractDto(field.Contract);
+        }
     }
 
 }

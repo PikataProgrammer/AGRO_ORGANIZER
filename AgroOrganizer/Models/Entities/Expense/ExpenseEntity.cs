@@ -1,4 +1,6 @@
-﻿using AgroOrganizer.Models.Dtos.ExpenseDto;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using AgroOrganizer.Models.Dtos.ExpenseDto;
+using AgroOrganizer.Models.Entities.Field;
 using AgroOrganizer.Models.Entities.FieldSeason;
 
 namespace AgroOrganizer.Models.Entities.Expense;
@@ -11,6 +13,7 @@ public class ExpenseEntity
     public DateTimeOffset Date { get; private set; }
 
     public int FieldSeasonId { get; private set; }
+    [ForeignKey("FieldSeasonId")]
     public FieldSeasonEntity FieldSeason { get; private set; }
 
     public ExpenseEntity() { }
@@ -20,7 +23,6 @@ public class ExpenseEntity
         Type = expenseDto.Type;
         Amount = expenseDto.Amount;
         Date = expenseDto.Date;
-        FieldSeason = expenseDto.FieldSeason;
         FieldSeasonId = expenseDto.FieldSeasonId ;
     }
 
@@ -29,7 +31,6 @@ public class ExpenseEntity
         Type = dto.Type;
         Amount = dto.Amount;
         Date = dto.Date;
-        FieldSeason = dto.FieldSeason;
         FieldSeasonId = dto.FieldSeasonId;
     }
 }

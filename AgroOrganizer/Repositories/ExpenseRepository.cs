@@ -18,7 +18,6 @@ public class ExpenseRepository : IExpenseRepository
     public async Task<List<ExpenseEntity>> GetAllAsync(int offset, int limit)
     {
         return await _context.Expenses
-            .Include(e => e.FieldSeason)
             .Skip(offset)
             .Take(limit)
             .ToListAsync();
@@ -27,7 +26,6 @@ public class ExpenseRepository : IExpenseRepository
     public async Task<ExpenseEntity?> GetByIdAsync(int id)
     {
         return await _context.Expenses
-            .Include(e => e.FieldSeason)
             .AsNoTracking()
             .FirstOrDefaultAsync(e => e.Id == id);
     }

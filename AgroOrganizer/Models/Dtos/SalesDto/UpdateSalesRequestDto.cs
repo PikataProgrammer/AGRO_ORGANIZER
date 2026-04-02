@@ -11,5 +11,4 @@ public class UpdateSalesRequestDto
     public double Quantity { get;  set; }
     public string BuyerName { get;  set; }
     public int FieldSeasonId { get; set; }
-    public FieldSeasonEntity FieldSeason { get; set; }
 }
