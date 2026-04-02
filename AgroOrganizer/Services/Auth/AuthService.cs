@@ -76,6 +76,7 @@ public class AuthService : IAuthService
         //authentication successful so generate jwt token
         try
         {
+            
             var userEntity = await _context.Users.Where(user => user.Id == userId).FirstOrDefaultAsync();
             if (userEntity == null) return null;
             
@@ -127,8 +128,7 @@ public class AuthService : IAuthService
             //Compare passwords
             var clientSalt = userEntity.PasswordSalt;
             var clientHash = userEntity.PasswordHash;
-        
-            Log.Information("Before change -> Hash: {Hash}, Salt: {Salt}", userEntity.PasswordHash, userEntity.PasswordSalt);
+            
             
             var oldPasswordCorrect = _passwordHasher.Verify(changePasswordRequestDto.OldPassword, clientHash, clientSalt);
             if (!oldPasswordCorrect)
@@ -138,9 +138,6 @@ public class AuthService : IAuthService
         
             //Change password
             (string newHashString, string newSaltString ) = _passwordHasher.Hash(changePasswordRequestDto.NewPassword);
-            Log.Information("New password hash: {Hash}, salt: {Salt}", newHashString, newSaltString);
-            
-            
             userEntity.ChangePassword(newHashString, newSaltString, false);
         
             await _context.SaveChangesAsync();

@@ -16,15 +16,24 @@ public class AuthController
             return result is null ? Results.Unauthorized() : Results.Ok(result);
         }).WithName("Login").WithTags("Auth");
 
-        app.MapPost(baseRoute + "/refresh", async (IAuthService service, HttpContext context, ClaimsPrincipal user) =>
+        app.MapPost(baseRoute + "/refresh", async (IAuthService service, IJwtUtils jwtUtils, HttpContext context) =>
         {
-            var userId = user.FindFirst("id")?.Value;
-            if (userId == null)
+            var refreshToken = context.Request.Cookies["Refresh-Token"];
+
+            if (string.IsNullOrEmpty(refreshToken))
             {
                 return Results.Unauthorized();
             }
 
+            if (!jwtUtils.ValidateJwtToken(refreshToken, out var jwtToken))
+            {
+                return Results.Unauthorized();
+            }
+
+            var userId = jwtToken.Claims.First(x => x.Type == "id").Value;
+
             var result = await service.GenerateTokens(context, int.Parse(userId));
+
             return Results.Ok(result);
         }).WithName("GenerateTokens").WithTags("Auth");
 
