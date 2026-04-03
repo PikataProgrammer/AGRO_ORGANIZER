@@ -52,4 +52,10 @@ public class FieldService : IFieldService
         var deletedField = await _fieldRepository.DeleteFieldAsync(fieldId);
         return  deletedField != null;
     }
+    
+    public async Task<List<FieldDto>> GetAllFieldsWithSeasons()
+    {
+        var fields = await _fieldRepository.GetAllWithSeasonsAsync();
+        return fields.Select(f => new FieldDto(f)).ToList();
+    }
 }

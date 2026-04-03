@@ -10,4 +10,5 @@ public interface IFieldService
     Task<FieldDto> CreateFieldAsync(CreateFieldRequestDto dto);
     Task<FieldDto?> UpdateFieldAsync(int fieldId, CreateFieldRequestDto fieldDto);
     Task<bool> DeleteFieldAsync(int fieldId);
+    public Task<List<FieldDto>> GetAllFieldsWithSeasons();
 }

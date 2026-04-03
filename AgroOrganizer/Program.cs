@@ -10,18 +10,23 @@ using AgroOrganizer.Services.Auth;
 using AgroOrganizer.Services.Auth.Interfaces;
 using AgroOrganizer.Services.Contract;
 using AgroOrganizer.Services.Driver;
+using AgroOrganizer.Services.Excel;
+using AgroOrganizer.Services.Excel.Interface;
 using AgroOrganizer.Services.Expense;
 using AgroOrganizer.Services.Field;
 using AgroOrganizer.Services.FieldSeason;
 using AgroOrganizer.Services.Interfaces;
 using AgroOrganizer.Services.Mail;
 using AgroOrganizer.Services.Mail.Interfaces;
+using AgroOrganizer.Services.Reports;
 using AgroOrganizer.Services.Sales;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Information()
+    .MinimumLevel.Debug()
+    .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
+    .MinimumLevel.Override("Microsoft.EntityFrameworkCore", Serilog.Events.LogEventLevel.Warning)
     .WriteTo.Console()
     .CreateLogger();
 var builder = WebApplication.CreateBuilder(args);
@@ -43,6 +48,8 @@ builder.Services.AddScoped<IFieldService, FieldService>();
 builder.Services.AddScoped<IFieldSeasonService, FieldSeasonDtoService>();
 builder.Services.AddScoped<ISaleService, SaleService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ReportService>();
+builder.Services.AddScoped<IExcelService, ExcelService>();
 
 //Repositories
 builder.Services.AddScoped<IActivityRepository, ActivityRepository>();
@@ -71,6 +78,7 @@ FieldController.SetUpFieldRoutes(app, "api/field");
 FieldSeasonController.SetUpFieldSeasonRoutes(app, "api/fieldseason");
 SaleController.SetUpSaleRoutes(app, "api/sale");
 UserController.SetUpUserRoutes(app, "api/user");
+ReportController.SetUpReportRoutes(app, "api/reports");
 
 if (app.Environment.IsDevelopment())
 {

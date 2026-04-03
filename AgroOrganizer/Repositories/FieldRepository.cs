@@ -74,6 +74,18 @@ public class FieldRepository : IFieldRepository
         await _context.SaveChangesAsync();
         return field;
     }
+    public async Task<List<FieldEntity>> GetAllWithSeasonsAsync()
+    {
+        return await _context.Fields
+            .Include(f => f.Seasons)
+            .ThenInclude(s => s.Activities)
+            .ThenInclude(a => a.Driver)
+            .Include(f => f.Seasons)
+            .ThenInclude(s => s.Expenses)
+            .Include(f => f.Seasons)
+            .ThenInclude(s => s.Sales)
+            .ToListAsync();
+    }
 
     public Task SaveChangesAsync()
     {

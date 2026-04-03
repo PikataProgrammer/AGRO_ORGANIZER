@@ -12,4 +12,5 @@ public interface IFieldRepository
     public Task<FieldEntity?> UpdateFieldAsync(int id, CreateFieldRequestDto fieldModelState);
     public Task<FieldEntity?> DeleteFieldAsync(int id);
     public Task SaveChangesAsync();
+    Task<List<FieldEntity>> GetAllWithSeasonsAsync();
 }
