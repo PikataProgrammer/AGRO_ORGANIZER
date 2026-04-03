@@ -14,6 +14,7 @@ public class ActivityDto
 
     public int FieldSeasonId { get; set; }
     public int? DriverId { get; set; }
+    public string? DriverName { get; set; }
 
     public ActivityDto(ActivityEntity entity)
     {
@@ -23,5 +24,7 @@ public class ActivityDto
         Notes = entity.Notes;
         FieldSeasonId = entity.FieldSeasonId;
         DriverId = entity.DriverId;
+        
+        DriverName = entity.Driver?.DriverName;
     }
 }
