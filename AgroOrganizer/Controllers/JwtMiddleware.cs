@@ -4,8 +4,8 @@ using AgroOrganizer.Services.Auth.Interfaces;
 
 public class JwtMiddleware
 {
-    private readonly RequestDelegate _next;
-
+    private readonly RequestDelegate _next; //handles an HTTP request
+    
     public JwtMiddleware(RequestDelegate next)
     {
         _next = next;
@@ -15,7 +15,7 @@ public class JwtMiddleware
     {
         // Skip swagger and auth endpoints
         var path = context.Request.Path.Value?.ToLower() ?? "";
-        if (path.Contains("swagger") || path.EndsWith("/auth/login") || path.EndsWith("/auth/changepassword") || path.EndsWith("/auth/resetpassword"))
+        if (path.Contains("swagger") || path.EndsWith("/auth/login") || path.EndsWith("/auth/change-password") || path.EndsWith("/auth/reset-password"))
         {
             await _next(context);
             return;
@@ -37,7 +37,7 @@ public class JwtMiddleware
             var userClaim = jwtAccessToken?.Claims.FirstOrDefault(c => c.Type == "user")?.Value;
             if (!string.IsNullOrEmpty(userClaim))
             {
-                var userDto = JsonSerializer.Deserialize<LoginResponseDto>(userClaim);
+                var userDto = JsonSerializer.Deserialize<LoginResponseDto>(userClaim); 
                 if (userDto != null)
                 {
                     context.Items["User"] = userDto;
@@ -47,7 +47,7 @@ public class JwtMiddleware
             }
         }
 
-        // If Access Token invalid, try Refresh Token
+        // If Access Token invalid, try Refresh Token - and if it is valid return decoded JWT object
         if (!string.IsNullOrEmpty(refreshToken) && jwtUtils.ValidateJwtToken(refreshToken, out var jwtRefreshToken))
         {
             var userIdClaim = jwtRefreshToken?.Claims.FirstOrDefault(c => c.Type == "id")?.Value;

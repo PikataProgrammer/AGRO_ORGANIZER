@@ -89,11 +89,11 @@ public class MailService : IMailService
         {
             Host = _configuration["WebMail:Host"] ?? "smtp.gmail.com",
             Port = int.Parse(_configuration["WebMail:Port"] ?? "587"),
-            EnableSsl = true,
-            Credentials = new NetworkCredential(from.Address, password)
+            EnableSsl = true, //Encrypting the relationship
+            Credentials = new NetworkCredential(from.Address, password) //Login info for SMTP server
         };
 
-        message.From = from;
+        message.From = from; //Connection between MailMessage and SmtpClient
         message.To.Add(to);
 
         await smtp.SendMailAsync(message);

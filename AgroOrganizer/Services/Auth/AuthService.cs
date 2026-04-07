@@ -86,7 +86,7 @@ public class AuthService : IAuthService
             var accesTokenExpiryMinutes = int.Parse(_configuration["AuthJWT:ExpiryMinutes"] ?? "10");
             var refreshTokenExpiryMinutes = int.Parse(_configuration["AuthJWT:RefreshExpiryMinutes"] ?? "20");
             
-            var isDev = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+            var isDev = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development"; //Check if we are in dev environment http
             
             context.Response.Cookies.Append("Access-Token", accessToken, new CookieOptions()
             {
@@ -154,7 +154,7 @@ public class AuthService : IAuthService
 
     public async Task<bool> ResetPassword(ForgottenPasswordRequestDto forgottenPasswordRequestDto)
     {
-        using var transaction = await _context.Database.BeginTransactionAsync();
+        using var transaction = await _context.Database.BeginTransactionAsync(); //Start writing down everything in a 'temporary memory'.
         try
         {
             var userEntity = await _context.Users.Where(user => user.Email == forgottenPasswordRequestDto.Email).FirstOrDefaultAsync();

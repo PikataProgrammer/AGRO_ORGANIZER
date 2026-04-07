@@ -10,4 +10,5 @@ public interface IExpenseService
     Task<ExpenseDto> CreateAsync(CreateExpenseDto dto);
     Task<ExpenseDto?> UpdateAsync(int expenseId, UpdateExpenseDto expenseDto);
     Task<bool> DeleteAsync(int expenseId);
+    public Task<List<ExpenseDto>> GetAllExcelAsync();
 }

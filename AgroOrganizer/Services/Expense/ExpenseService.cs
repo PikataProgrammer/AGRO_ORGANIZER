@@ -53,4 +53,10 @@ public class ExpenseService : IExpenseService
         var deletedExpense = await _expenseRepository.DeleteAsync(expenseId);
         return deletedExpense != null;
     }
+
+    public async Task<List<ExpenseDto>> GetAllExcelAsync()
+    {
+        var expenses = await _expenseRepository.GetExpensesExcelAsync();
+        return expenses.Select(x => new ExpenseDto(x)).ToList();
+    }
 }

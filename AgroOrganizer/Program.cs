@@ -24,7 +24,7 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Debug()
+    .MinimumLevel.Information()
     .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
     .MinimumLevel.Override("Microsoft.EntityFrameworkCore", Serilog.Events.LogEventLevel.Warning)
     .WriteTo.Console()
@@ -48,7 +48,8 @@ builder.Services.AddScoped<IFieldService, FieldService>();
 builder.Services.AddScoped<IFieldSeasonService, FieldSeasonDtoService>();
 builder.Services.AddScoped<ISaleService, SaleService>();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<ReportService>();
+builder.Services.AddScoped<ReportFieldService>();
+builder.Services.AddScoped<ReportExpensesService>();
 builder.Services.AddScoped<IExcelService, ExcelService>();
 
 //Repositories
@@ -67,6 +68,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.UseMiddleware<JwtMiddleware>();
+
 
 //Controllers
 ActivityController.SetUpActivityRoutes(app, "api/activity");
@@ -87,5 +90,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+Console.WriteLine("Now listening on:");
+Console.WriteLine("http://localhost:5236");
 app.Run();

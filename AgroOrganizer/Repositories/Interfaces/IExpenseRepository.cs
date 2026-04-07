@@ -10,5 +10,6 @@ public interface IExpenseRepository
     public Task<ExpenseEntity> CreateAsync(ExpenseEntity entity);
     public Task<ExpenseEntity?> UpdateAsync(int id,  UpdateExpenseDto dto);
     public Task<ExpenseEntity?> DeleteAsync(int id);
+    public Task<List<ExpenseEntity>> GetExpensesExcelAsync();
     public Task SaveChangesAsync();
 }

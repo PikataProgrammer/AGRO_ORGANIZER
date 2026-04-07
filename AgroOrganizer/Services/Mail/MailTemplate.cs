@@ -36,6 +36,6 @@ public static class MailTemplate
         sb.AppendLine($"<div>С уважение,</div>");
         sb.AppendLine($"<div>Дерменджиеви Агро</div>");
 
-        return new MailTemplateEntity("AO//Генерирана нова парола за достъп до Agro Organizer на Дерменджиеви Агро", sb.ToString());
+        return new MailTemplateEntity("Генерирана нова парола за достъп до Agro Organizer на Дерменджиеви Агро", sb.ToString());
     }
 }

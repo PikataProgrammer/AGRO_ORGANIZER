@@ -57,5 +57,11 @@ public class ExpenseRepository : IExpenseRepository
         return expense;
     }
 
+    public async Task<List<ExpenseEntity>> GetExpensesExcelAsync()
+    {
+        return await _context.Expenses
+            .ToListAsync();
+    }
+
     public Task SaveChangesAsync() => _context.SaveChangesAsync();
 }

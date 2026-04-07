@@ -6,137 +6,115 @@ using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace AgroOrganizer.Services.Excel
 {
     public class ExcelService : IExcelService
     {
         public MemoryStream? GenerateExcel<T>(List<T> data, ExcelOptions excelOptions)
-{
-    if (data == null || !data.Any()) return null;
-
-    try
-    {
-        IWorkbook workbook = new XSSFWorkbook();
-        ISheet sheet = workbook.CreateSheet("Report");
-
-        // 1. Дефиниране на стилове
-        var headerStyle = CreateHeaderStyle(workbook);
-        var dateStyle = CreateCellStyle(workbook, HorizontalAlignment.Center, "dd.MM.yyyy");
-        var decimalStyle = CreateCellStyle(workbook, HorizontalAlignment.Right, "#,##0.00");
-        var intStyle = CreateCellStyle(workbook, HorizontalAlignment.Center, "0");
-        var normalStyle = CreateCellStyle(workbook, HorizontalAlignment.Left);
-
-        int rowNum = 0;
-
-        // Title
-        if (excelOptions.ExcelTitle != null)
         {
-            GenerateTitle(workbook, sheet, excelOptions.ExcelTitle, excelOptions);
-            rowNum++;
-        }
+            if (data == null || !data.Any()) return null;
 
-        // 2. Header
-        IRow headerRow = sheet.CreateRow(rowNum++);
-        headerRow.HeightInPoints = 25;
-        int colIdx = 0;
-        foreach (var col in excelOptions.Columns)
-        {
-            ICell cell = headerRow.CreateCell(colIdx++);
-            cell.SetCellValue(col.Value.Label);
-            cell.CellStyle = headerStyle;
-        }
-
-        // 3. Fill Data
-        var properties = typeof(T).GetProperties();
-        foreach (var item in data)
-        {
-            IRow row = sheet.CreateRow(rowNum++);
-            colIdx = 0;
-
-            foreach (var colKey in excelOptions.Columns.Keys)
+            try
             {
-                var prop = Array.Find(properties, p => string.Equals(p.Name, colKey, StringComparison.OrdinalIgnoreCase));
-                ICell cell = row.CreateCell(colIdx++);
+                IWorkbook workbook = new XSSFWorkbook();
+                ISheet sheet = workbook.CreateSheet("Report");
 
-                if (prop == null || prop.GetValue(item) == null)
+                var titleStyle = CreateTitleStyle(workbook);
+                var headerStyle = CreateHeaderStyle(workbook);
+                var dateStyle = CreateCellStyle(workbook, HorizontalAlignment.Center, "dd.MM.yyyy");
+                var decimalStyle = CreateCellStyle(workbook, HorizontalAlignment.Right, "#,##0.00");
+                var intStyle = CreateCellStyle(workbook, HorizontalAlignment.Center, "0");
+                var normalStyle = CreateCellStyle(workbook, HorizontalAlignment.Left);
+
+                int rowNum = 0;
+
+                // Title
+                if (excelOptions.ExcelTitle != null)
                 {
-                    cell.CellStyle = normalStyle;
-                    continue;
+                    GenerateTitle(workbook, sheet, excelOptions.ExcelTitle, excelOptions, titleStyle);
+                    rowNum++;
                 }
 
-                var value = prop.GetValue(item);
-                Type type = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType;
+                // Header - blue color
+                IRow headerRow = sheet.CreateRow(rowNum++);
+                headerRow.HeightInPoints = 25;
+                int colIdx = 0;
+                foreach (var col in excelOptions.Columns)
+                {
+                    ICell cell = headerRow.CreateCell(colIdx++);
+                    cell.SetCellValue(col.Value.Label);
+                    cell.CellStyle = headerStyle;
+                }
 
-                if (type == typeof(DateTime) || type == typeof(DateTimeOffset))
+                // Data in the table
+                var properties = typeof(T).GetProperties();
+                foreach (var item in data)
                 {
-                    cell.SetCellValue(type == typeof(DateTimeOffset) ? ((DateTimeOffset)value).DateTime : (DateTime)value);
-                    cell.CellStyle = dateStyle;
+                    IRow row = sheet.CreateRow(rowNum++);
+                    colIdx = 0;
+
+                    foreach (var colKey in excelOptions.Columns.Keys)
+                    {
+                        var prop = Array.Find(properties, p => string.Equals(p.Name, colKey, StringComparison.OrdinalIgnoreCase));
+                        ICell cell = row.CreateCell(colIdx++);
+                        cell.CellStyle = normalStyle;
+
+                        if (prop == null || prop.GetValue(item) == null) continue;
+
+                        var value = prop.GetValue(item);
+                        Type type = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType;
+
+                        if (type == typeof(DateTime) || type == typeof(DateTimeOffset))
+                        {
+                            cell.SetCellValue(type == typeof(DateTimeOffset) ? ((DateTimeOffset)value).DateTime : (DateTime)value);
+                            cell.CellStyle = dateStyle;
+                        }
+                        else if (type == typeof(decimal) || type == typeof(double) || type == typeof(float))
+                        {
+                            cell.SetCellValue(Convert.ToDouble(value));
+                            cell.CellStyle = decimalStyle;
+                        }
+                        else if (type == typeof(int) || type == typeof(long))
+                        {
+                            cell.SetCellValue(Convert.ToDouble(value));
+                            cell.CellStyle = intStyle;
+                        }
+                        else
+                        {
+                            cell.SetCellValue(value.ToString());
+                        }
+                    }
                 }
-                else if (type == typeof(decimal) || type == typeof(double) || type == typeof(float))
+                
+
+
+                if (excelOptions.ExcelFooter != null)
                 {
-                    cell.SetCellValue(Convert.ToDouble(value));
-                    cell.CellStyle = decimalStyle;
+                    GenerateFooter(workbook, sheet, excelOptions.ExcelFooter, excelOptions, rowNum);
                 }
-                else if (type == typeof(int) || type == typeof(long))
+                //Auto-size
+                for (int i = 0; i < excelOptions.Columns.Count; i++)
                 {
-                    cell.SetCellValue(Convert.ToDouble(value));
-                    cell.CellStyle = intStyle;
+                    sheet.AutoSizeColumn(i);
+                    sheet.SetColumnWidth(i, sheet.GetColumnWidth(i) + 1200); 
                 }
-                else
+
+                using (var ms = new MemoryStream())
                 {
-                    cell.SetCellValue(value.ToString());
-                    cell.CellStyle = normalStyle;
+                    workbook.Write(ms);
+                    return new MemoryStream(ms.ToArray());
                 }
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "Excel generation failed");
+                return null;
             }
         }
 
-        // 4. Auto-size колони (това маха "###")
-        for (int i = 0; i < excelOptions.Columns.Count; i++)
-        {
-            sheet.AutoSizeColumn(i);
-            // Добавяме малко "въздух", защото AutoSize е много впито
-            sheet.SetColumnWidth(i, sheet.GetColumnWidth(i) + 1200); 
-        }
-
-        // Footer
-        if (excelOptions.ExcelFooter != null)
-        {
-            GenerateFooter(workbook, sheet, excelOptions.ExcelFooter, excelOptions, rowNum);
-        }
-
-        // 5. Записване без грешки
-        using (var ms = new MemoryStream())
-        {
-            workbook.Write(ms);
-            return new MemoryStream(ms.ToArray()); // Връщаме копие, защото NPOI затваря оригиналния поток
-        }
-    }
-    catch (Exception e)
-    {
-        Log.Error(e, "Excel generation failed");
-        return null;
-    }
-}
-
-// Помощен метод за красив Хедър
-private ICellStyle CreateHeaderStyle(IWorkbook workbook)
-{
-    var style = workbook.CreateCellStyle();
-    var font = workbook.CreateFont();
-    font.IsBold = true;
-    font.Color = IndexedColors.White.Index;
-    font.FontHeightInPoints = 11;
-    
-    style.SetFont(font);
-    style.FillForegroundColor = IndexedColors.RoyalBlue.Index;
-    style.FillPattern = FillPattern.SolidForeground;
-    style.Alignment = HorizontalAlignment.Center;
-    style.VerticalAlignment = VerticalAlignment.Center;
-    style.BorderBottom = BorderStyle.Medium;
-    return style;
-}
-        private void GenerateFooter(IWorkbook workbook, ISheet sheet, ExcelFooter footer, ExcelOptions excelOptions, int lastRow)
+        private void GenerateFooter(IWorkbook workbook, ISheet sheet, ExcelFooter footer, ExcelOptions excelOptions, int rowIndex)
         {
             IFont font = workbook.CreateFont();
             font.IsBold = true;
@@ -147,15 +125,55 @@ private ICellStyle CreateHeaderStyle(IWorkbook workbook)
             style.SetFont(font);
             style.Alignment = HorizontalAlignment.Center;
             style.VerticalAlignment = VerticalAlignment.Center;
+            style.WrapText = true; 
+            
+            style.BorderTop = BorderStyle.Thin;
+            style.BorderBottom = BorderStyle.Thin;
+            style.BorderLeft = BorderStyle.Thin;
+            style.BorderRight = BorderStyle.Thin;
 
-            IRow row = sheet.CreateRow(lastRow + footer.Offset);
-            row.Height = (short)(footer.RowHeightInPoints * 20);
-
+            IRow row = sheet.CreateRow(rowIndex);
+            row.HeightInPoints = Math.Max(footer.RowHeightInPoints, 35f); 
+            
             ICell cell = row.CreateCell(0);
             cell.SetCellValue(footer.Content);
             cell.CellStyle = style;
+            
+            for (int i = 1; i < excelOptions.Columns.Count; i++)
+            {
+                ICell emptyCell = row.CreateCell(i);
+                emptyCell.CellStyle = style;
+            }
 
-            sheet.AddMergedRegion(new CellRangeAddress(lastRow + footer.Offset, lastRow + footer.Offset, 0, excelOptions.Columns.Count - 1));
+            sheet.AddMergedRegion(new CellRangeAddress(rowIndex, rowIndex, 0, excelOptions.Columns.Count - 1));
+        }
+
+
+        private ICellStyle CreateTitleStyle(IWorkbook workbook)
+        {
+            IFont font = workbook.CreateFont();
+            font.IsBold = true; font.FontHeightInPoints = 14; font.FontName = "Aptos Narrow";
+            var style = workbook.CreateCellStyle();
+            style.SetFont(font);
+            style.Alignment = HorizontalAlignment.Center;
+            style.VerticalAlignment = VerticalAlignment.Center;
+            style.BorderTop = style.BorderBottom = style.BorderLeft = style.BorderRight = BorderStyle.Thin;
+            return style;
+        }
+
+        private ICellStyle CreateHeaderStyle(IWorkbook workbook)
+        {
+            var style = workbook.CreateCellStyle();
+            var font = workbook.CreateFont();
+            font.IsBold = true; font.Color = IndexedColors.White.Index; font.FontHeightInPoints = 11; font.FontName = "Aptos Narrow";
+            style.SetFont(font);
+            style.FillForegroundColor = IndexedColors.RoyalBlue.Index;
+            style.FillPattern = FillPattern.SolidForeground;
+            style.Alignment = HorizontalAlignment.Center;
+            style.VerticalAlignment = VerticalAlignment.Center;
+            style.BorderTop = style.BorderLeft = style.BorderRight = BorderStyle.Thin;
+            style.BorderBottom = BorderStyle.Medium;
+            return style;
         }
 
         private ICellStyle CreateCellStyle(IWorkbook workbook, HorizontalAlignment alignment, string? format = null)
@@ -163,66 +181,20 @@ private ICellStyle CreateHeaderStyle(IWorkbook workbook)
             ICellStyle style = workbook.CreateCellStyle();
             style.Alignment = alignment;
             style.VerticalAlignment = VerticalAlignment.Center;
-            style.WrapText = true;
-            style.BorderTop = BorderStyle.Thin;
-            style.BorderLeft = BorderStyle.Thin;
-            style.BorderRight = BorderStyle.Thin;
-            style.BorderBottom = BorderStyle.Thin;
-            if (format != null)
-                style.DataFormat = workbook.CreateDataFormat().GetFormat(format);
+            style.BorderTop = style.BorderLeft = style.BorderRight = style.BorderBottom = BorderStyle.Thin;
+            if (format != null) style.DataFormat = workbook.CreateDataFormat().GetFormat(format);
             return style;
         }
 
-        private void GenerateTitle(IWorkbook workbook, ISheet sheet, ExcelTitle excelTitle, ExcelOptions options)
+        private void GenerateTitle(IWorkbook workbook, ISheet sheet, ExcelTitle excelTitle, ExcelOptions options, ICellStyle style)
         {
-            IFont font = workbook.CreateFont();
-            font.IsBold = true;
-            font.FontHeightInPoints = 14;
-            font.FontName = "Aptos Narrow";
-
-            ICellStyle style = workbook.CreateCellStyle();
-            style.SetFont(font);
-            style.Alignment = HorizontalAlignment.Center;
-            style.VerticalAlignment = VerticalAlignment.Center;
-
             IRow row = sheet.CreateRow(0);
-            row.Height = (short)(excelTitle.RowHeightInPoints * 20);
-
+            row.HeightInPoints = Math.Max(excelTitle.RowHeightInPoints, 30f);
             ICell cell = row.CreateCell(0);
             cell.SetCellValue(excelTitle.Content);
             cell.CellStyle = style;
-
+            for (int i = 1; i < options.Columns.Count; i++) { ICell c = row.CreateCell(i); c.CellStyle = style; }
             sheet.AddMergedRegion(new CellRangeAddress(0, 0, 0, options.Columns.Count - 1));
-        }
-
-        private void GenerateHeader(IWorkbook workbook, ISheet sheet, ExcelOptions options, int rowNumber, Dictionary<int, int> maxChars)
-        {
-            IFont font = workbook.CreateFont();
-            font.IsBold = true;
-            font.FontHeightInPoints = 12;
-            font.FontName = "Aptos Narrow";
-
-            ICellStyle style = workbook.CreateCellStyle();
-            style.SetFont(font);
-            style.Alignment = HorizontalAlignment.Center;
-            style.VerticalAlignment = VerticalAlignment.Center;
-            style.WrapText = true;
-            style.BorderTop = BorderStyle.Thin;
-            style.BorderLeft = BorderStyle.Thin;
-            style.BorderBottom = BorderStyle.Thin;
-            style.BorderRight = BorderStyle.Thin;
-
-            IRow row = sheet.CreateRow(rowNumber);
-            int counter = 0;
-
-            foreach (var col in options.Columns)
-            {
-                ICell cell = row.CreateCell(counter);
-                cell.SetCellValue(col.Value.Label);
-                cell.CellStyle = style;
-                maxChars[counter] = col.Value.Label.Length;
-                counter++;
-            }
         }
     }
 }

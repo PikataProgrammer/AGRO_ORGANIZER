@@ -7,12 +7,12 @@ using Serilog;
 
 namespace AgroOrganizer.Services.Reports;
 
-public class ReportService
+public class ReportFieldService
 {
     private readonly IFieldService _fieldService;
     private readonly IExcelService _excelService;
 
-    public ReportService(IFieldService fieldService, IExcelService excelService)
+    public ReportFieldService(IFieldService fieldService, IExcelService excelService)
     {
         _excelService = excelService;
         _fieldService = fieldService;
@@ -61,21 +61,22 @@ public class ReportService
 
     private ExcelOptions GetExcelOptions()
     {
+        var currentYear = DateTime.Now.Year;
         return new ExcelOptions
         {
-            ExcelTitle = new ExcelTitle { Content = "Справка Ниви" },
+            ExcelTitle = new ExcelTitle { Content = $"Справка Ниви - {currentYear}" },
             ExcelFooter = new ExcelFooter { Content = "Генерирана от Агро Дерменджиеви" },
             Columns =
             {
                 { "FieldName", new ExcelColumn { Label = "Нива" } },
                 { "FieldSize", new ExcelColumn { Label = "Размер (дка)" } },
                 { "FieldLocation", new ExcelColumn { Label = "Местоположение" } },
-                { "Year", new ExcelColumn { Label = "Година" } },
+                // { "Year", new ExcelColumn { Label = "Година" } },
                 { "CropType", new ExcelColumn { Label = "Вид култура" } },
                 { "ActivityType", new ExcelColumn { Label = "Статус" } },
                 { "DriverName", new ExcelColumn { Label = "Шофьор" } },
-                { "ExpenseAmount", new ExcelColumn { Label = "Общо разходи" } },
-                { "SaleTotal", new ExcelColumn { Label = "Общо приходи" } },
+                // { "ExpenseAmount", new ExcelColumn { Label = "Общо разходи" } },
+                // { "SaleTotal", new ExcelColumn { Label = "Общо приходи" } },
             }
         };
     }
@@ -87,7 +88,6 @@ public class ReportService
 
     foreach (var field in fields)
     {
-        // Ако нивата няма сезони, пак можем да я покажем като празен ред (по желание)
         if (field.Seasons == null || !field.Seasons.Any())
         {
             result.Add(new FieldReportDto
@@ -108,17 +108,16 @@ public class ReportService
                     .Select(a => a.DriverName ?? $"ID: {a.DriverId}") 
                     .Distinct())
                 : "No driver";
-            // Обединяваме всички активности в един стринг, за да не заема много редове
+
             var activityNames = season.Activities != null && season.Activities.Any()
                 ? string.Join(", ", season.Activities.Select(a => a.Type.ToString()))
                 : "No activities";
 
-            // Вземаме последната дата на активност (или null)
-            var lastActivityDate = season.Activities?.OrderByDescending(a => a.Date).FirstOrDefault()?.Date;
 
-            // Сумираме разходите и продажбите за сезона
-            decimal totalExpenses = season.Expenses?.Sum(e => e.Amount) ?? 0;
-            decimal totalSales = season.Sales?.Sum(s => s.TotalPrice) ?? 0;
+            var lastActivityDate = season.Activities?.OrderByDescending(a => a.Date).FirstOrDefault()?.Date;
+            
+            // decimal totalExpenses = season.Expenses?.Sum(e => e.Amount) ?? 0;
+            // decimal totalSales = season.Sales?.Sum(s => s.TotalPrice) ?? 0;
 
             var dto = new FieldReportDto
             {
@@ -133,15 +132,12 @@ public class ReportService
                 DriverName = driverNames,
                 ActivityDate = lastActivityDate,
                 
-                // Финансови данни (сумирани)
-                ExpenseAmount = totalExpenses,
-                SaleTotal = totalSales,
+                // ExpenseAmount = totalExpenses,
+                // SaleTotal = totalSales,
                 
-                // Бележка (вземаме първата налична или празно)
                 ActivityNotes = season.Activities?.FirstOrDefault(a => !string.IsNullOrEmpty(a.Notes))?.Notes ?? ""
             };
-
-            Log.Debug("Adding flattened row for Field: {FieldName}, Year: {Year}", dto.FieldName, dto.Year);
+            
             result.Add(dto);
         }
     }

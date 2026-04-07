@@ -12,8 +12,6 @@ namespace AgroOrganizer.Services.Auth;
 public class JwtUtils : IJwtUtils
 {
     private readonly IConfiguration _configuration;
-    public string? CurrentUserUsername { get; private set; }
-    public int? CurrentUserUserId { get; private set; }
     public JwtUtils(IConfiguration configuration)
     {
         _configuration = configuration;
@@ -24,7 +22,7 @@ public class JwtUtils : IJwtUtils
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.UTF8.GetBytes(_configuration["AuthJWT:PrivateKey"]);
         var expiryMinutes = int.Parse(_configuration["AuthJWT:ExpiryMinutes"] ?? "10");
-        var tokenDiscriptor = new SecurityTokenDescriptor
+        var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new[]
                 { new Claim("user", JsonSerializer.Serialize(new LoginResponseDto(user))) }),
@@ -32,7 +30,7 @@ public class JwtUtils : IJwtUtils
             SigningCredentials =
                 new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
         };
-        var token = tokenHandler.CreateToken(tokenDiscriptor);
+        var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);
     }
 
@@ -42,7 +40,7 @@ public class JwtUtils : IJwtUtils
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.UTF8.GetBytes(_configuration["AuthJWT:PrivateKey"]);
         var expiryMinutes = int.Parse(_configuration["AuthJWT:RefreshExpiryMinutes"] ?? "20");
-        var tokenDiscriptor = new SecurityTokenDescriptor
+        var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new[]
                 { new Claim("id", user.Id.ToString()) }),
@@ -50,7 +48,7 @@ public class JwtUtils : IJwtUtils
             SigningCredentials =
                 new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
         };
-        var token = tokenHandler.CreateToken(tokenDiscriptor);
+        var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);
     }
 
