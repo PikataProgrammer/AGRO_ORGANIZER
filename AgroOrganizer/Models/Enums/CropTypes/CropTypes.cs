@@ -9,4 +9,6 @@ public enum CropTypes
     Sunflower = 5,
     Corn = 6,
     None = 7,
+    Lucerne = 8, 
+    Lawns = 9,
 }

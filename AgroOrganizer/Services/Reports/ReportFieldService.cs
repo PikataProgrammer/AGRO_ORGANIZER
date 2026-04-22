@@ -71,12 +71,9 @@ public class ReportFieldService
                 { "FieldName", new ExcelColumn { Label = "Нива" } },
                 { "FieldSize", new ExcelColumn { Label = "Размер (дка)" } },
                 { "FieldLocation", new ExcelColumn { Label = "Местоположение" } },
-                // { "Year", new ExcelColumn { Label = "Година" } },
                 { "CropType", new ExcelColumn { Label = "Вид култура" } },
                 { "ActivityType", new ExcelColumn { Label = "Статус" } },
                 { "DriverName", new ExcelColumn { Label = "Шофьор" } },
-                // { "ExpenseAmount", new ExcelColumn { Label = "Общо разходи" } },
-                // { "SaleTotal", new ExcelColumn { Label = "Общо приходи" } },
             }
         };
     }
@@ -116,8 +113,6 @@ public class ReportFieldService
 
             var lastActivityDate = season.Activities?.OrderByDescending(a => a.Date).FirstOrDefault()?.Date;
             
-            // decimal totalExpenses = season.Expenses?.Sum(e => e.Amount) ?? 0;
-            // decimal totalSales = season.Sales?.Sum(s => s.TotalPrice) ?? 0;
 
             var dto = new FieldReportDto
             {
@@ -132,8 +127,6 @@ public class ReportFieldService
                 DriverName = driverNames,
                 ActivityDate = lastActivityDate,
                 
-                // ExpenseAmount = totalExpenses,
-                // SaleTotal = totalSales,
                 
                 ActivityNotes = season.Activities?.FirstOrDefault(a => !string.IsNullOrEmpty(a.Notes))?.Notes ?? ""
             };

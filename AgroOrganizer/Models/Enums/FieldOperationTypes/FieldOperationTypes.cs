@@ -7,5 +7,6 @@ public enum FieldOperationTypes
     Fertilizing = 3,   //Torene
     Spraying = 4, 
     Harvesting = 5,
-    None = 6,
+    Disking = 6,
+    None = 7,
 }

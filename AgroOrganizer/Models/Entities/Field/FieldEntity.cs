@@ -11,7 +11,7 @@ public class FieldEntity
     public int Id { get; private set; }
     public string FieldName { get; private set; }
     public decimal FieldSize { get; private set; }
-    public string FieldLocation { get; private set; }
+    public string? FieldLocation { get; private set; }
     public DateTimeOffset CreatedOn { get; private set; }
 
     public int UserId { get; private set; }

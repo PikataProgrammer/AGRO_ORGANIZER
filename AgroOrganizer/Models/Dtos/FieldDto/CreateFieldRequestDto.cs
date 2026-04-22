@@ -10,7 +10,7 @@ public class CreateFieldRequestDto
 {
     public string FieldName { get; set; }
     public decimal FieldSize { get; set; }
-    public string FieldLocation { get; set; }
+    public string? FieldLocation { get; set; }
     public DateTimeOffset CreatedOn { get; set; }
     public int UserId { get; set; }
 

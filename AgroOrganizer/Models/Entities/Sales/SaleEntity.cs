@@ -14,7 +14,7 @@ public class SaleEntity
     public decimal TotalPrice => PriceForKg * (decimal)Quantity;
     public string BuyerName { get; private set; }
 
-    public int FieldSeasonId { get; private set; }
+    public int? FieldSeasonId { get; private set; }
     public FieldSeasonEntity FieldSeason { get; private set; }
 
     public SaleEntity() { }

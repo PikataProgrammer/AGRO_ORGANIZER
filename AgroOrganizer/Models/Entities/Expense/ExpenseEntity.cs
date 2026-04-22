@@ -12,7 +12,7 @@ public class ExpenseEntity
     public decimal Amount { get; private set; }
     public DateTimeOffset Date { get; private set; }
 
-    public int FieldSeasonId { get; private set; }
+    public int? FieldSeasonId { get; private set; }
     [ForeignKey("FieldSeasonId")]
     public FieldSeasonEntity FieldSeason { get; private set; }
 

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "qJY/+imnqKw=",
+  "dgSpecHash": "LgDsywP0arc=",
   "success": true,
-  "projectFilePath": "C:\\Agro-Organizer\\AgroOrganizer_backend\\AgroOrganizer\\AgroOrganizer.csproj",
+  "projectFilePath": "C:\\аgro-оrganizer\\AgroOrganizer_backend\\AgroOrganizer\\AgroOrganizer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Peter\\.nuget\\packages\\bouncycastle.cryptography\\2.6.2\\bouncycastle.cryptography.2.6.2.nupkg.sha512",
     "C:\\Users\\Peter\\.nuget\\packages\\carter.analyzers\\10.0.0\\carter.analyzers.10.0.0.nupkg.sha512",

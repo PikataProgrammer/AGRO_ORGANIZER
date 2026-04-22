@@ -10,5 +10,5 @@ public class UpdateSalesRequestDto
     public decimal PriceForKg { get;  set; }
     public double Quantity { get;  set; }
     public string BuyerName { get;  set; }
-    public int FieldSeasonId { get; set; }
+    public int? FieldSeasonId { get; set; }
 }

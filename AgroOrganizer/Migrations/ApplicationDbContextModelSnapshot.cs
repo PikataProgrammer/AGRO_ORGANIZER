@@ -116,7 +116,7 @@ namespace AgroOrganizer.Migrations
                     b.Property<DateTimeOffset>("Date")
                         .HasColumnType("datetime");
 
-                    b.Property<int>("FieldSeasonId")
+                    b.Property<int?>("FieldSeasonId")
                         .HasColumnType("int");
 
                     b.Property<string>("Type")
@@ -140,7 +140,6 @@ namespace AgroOrganizer.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<string>("FieldLocation")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("FieldName")
@@ -198,7 +197,7 @@ namespace AgroOrganizer.Migrations
                     b.Property<DateTimeOffset>("DateSigned")
                         .HasColumnType("datetime");
 
-                    b.Property<int>("FieldSeasonId")
+                    b.Property<int?>("FieldSeasonId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("PriceForKg")
@@ -248,11 +247,44 @@ namespace AgroOrganizer.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("AgroOrganizer.Models.Entities.Vehicles.VehicleEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastServiceDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PlateNumber")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int?>("PurchaseYear")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Vehicles");
+                });
+
             modelBuilder.Entity("AgroOrganizer.Models.Entities.Activity.ActivityEntity", b =>
                 {
                     b.HasOne("AgroOrganizer.Models.Entities.Drivers.DriverEntity", "Driver")
                         .WithMany("Activities")
-                        .HasForeignKey("DriverId");
+                        .HasForeignKey("DriverId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("AgroOrganizer.Models.Entities.FieldSeason.FieldSeasonEntity", "FieldSeason")
                         .WithMany("Activities")
@@ -281,8 +313,7 @@ namespace AgroOrganizer.Migrations
                     b.HasOne("AgroOrganizer.Models.Entities.FieldSeason.FieldSeasonEntity", "FieldSeason")
                         .WithMany("Expenses")
                         .HasForeignKey("FieldSeasonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("FieldSeason");
                 });
@@ -314,8 +345,7 @@ namespace AgroOrganizer.Migrations
                     b.HasOne("AgroOrganizer.Models.Entities.FieldSeason.FieldSeasonEntity", "FieldSeason")
                         .WithMany("Sales")
                         .HasForeignKey("FieldSeasonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("FieldSeason");
                 });

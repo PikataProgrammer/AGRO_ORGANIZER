@@ -20,6 +20,7 @@ using AgroOrganizer.Services.Mail;
 using AgroOrganizer.Services.Mail.Interfaces;
 using AgroOrganizer.Services.Reports;
 using AgroOrganizer.Services.Sales;
+using AgroOrganizer.Services.Vehicles;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -36,6 +37,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FrontendPolicy", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173", "http://localhost:5174") 
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
 //Services
 builder.Services.AddScoped<IMailService, MailService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
@@ -48,9 +59,11 @@ builder.Services.AddScoped<IFieldService, FieldService>();
 builder.Services.AddScoped<IFieldSeasonService, FieldSeasonDtoService>();
 builder.Services.AddScoped<ISaleService, SaleService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IVehiclesService, VehiclesService>();
 builder.Services.AddScoped<ReportFieldService>();
 builder.Services.AddScoped<ReportExpensesService>();
 builder.Services.AddScoped<IExcelService, ExcelService>();
+
 
 //Repositories
 builder.Services.AddScoped<IActivityRepository, ActivityRepository>();
@@ -61,6 +74,7 @@ builder.Services.AddScoped<IFieldRepository, FieldRepository>();
 builder.Services.AddScoped<IFieldSeasonRepository, FieldSeasonRepository>();
 builder.Services.AddScoped<ISaleRepository, SaleRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
 
 builder.Services.AddScoped<IJwtUtils, JwtUtils>();
 
@@ -68,20 +82,22 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.UseCors("FrontendPolicy");
 app.UseMiddleware<JwtMiddleware>();
 
 
 //Controllers
-ActivityController.SetUpActivityRoutes(app, "api/activity");
+ActivityController.SetUpActivityRoutes(app, "/api/activity");
 AuthController.SetUpAuthRoutes(app, "/api/auth");
-ContractController.SetUpContractRoutes(app, "api/contract");
-DriverController.SetUpDriverRoutes(app, "api/driver");
-ExpenseController.SetUpExpenseRoutes(app, "api/expense");
-FieldController.SetUpFieldRoutes(app, "api/field");
-FieldSeasonController.SetUpFieldSeasonRoutes(app, "api/fieldseason");
-SaleController.SetUpSaleRoutes(app, "api/sale");
-UserController.SetUpUserRoutes(app, "api/user");
-ReportController.SetUpReportRoutes(app, "api/reports");
+ContractController.SetUpContractRoutes(app, "/api/contract");
+DriverController.SetUpDriverRoutes(app, "/api/driver");
+ExpenseController.SetUpExpenseRoutes(app, "/api/expense");
+FieldController.SetUpFieldRoutes(app, "/api/field");
+FieldSeasonController.SetUpFieldSeasonRoutes(app, "/api/fieldseason");
+SaleController.SetUpSaleRoutes(app, "/api/sale");
+UserController.SetUpUserRoutes(app, "/api/user");
+ReportController.SetUpReportRoutes(app, "/api/reports");
+VehicleController.SetUpVehiclesRoutes(app, "/api/vehicles");
 
 if (app.Environment.IsDevelopment())
 {
@@ -89,7 +105,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
 Console.WriteLine("Now listening on:");
 Console.WriteLine("http://localhost:5236");
 app.Run();
