@@ -28,25 +28,6 @@ public class ReportFieldService
             return null;
         }
 
-        foreach (var field in fields)
-        {
-            if (field.Seasons == null || !field.Seasons.Any())
-                Log.Warning("Field {FieldName} has no seasons.", field.FieldName);
-
-            foreach (var season in field.Seasons)
-            {
-                if (season.Activities == null || !season.Activities.Any())
-                    Log.Information("Season {Year} of field {FieldName} has no activities.", season.Year, field.FieldName);
-
-                if (season.Expenses == null || !season.Expenses.Any())
-                    Log.Information("Season {Year} of field {FieldName} has no expenses.", season.Year, field.FieldName);
-
-                if (season.Sales == null || !season.Sales.Any())
-                    Log.Information("Season {Year} of field {FieldName} has no sales.", season.Year, field.FieldName);
-            }
-        }
-        Log.Information("Total fields fetched: {Count}", fields.Count);
-
         var reportData = FlattenFields(fields);
 
         if (reportData == null || !reportData.Any())
@@ -78,63 +59,93 @@ public class ReportFieldService
         };
     }
 
-
     public List<FieldReportDto> FlattenFields(List<FieldDto> fields)
-{
-    var result = new List<FieldReportDto>();
-
-    foreach (var field in fields)
     {
-        if (field.Seasons == null || !field.Seasons.Any())
+        var result = new List<FieldReportDto>();
+        
+        var targetYear = DateTime.Now.Year; 
+
+        foreach (var field in fields)
         {
+            var currentSeason = field.Seasons?.FirstOrDefault(s => s.Year == targetYear);
+            
+            if (currentSeason == null)
+            {
+                result.Add(new FieldReportDto
+                {
+                    FieldName = field.FieldName,
+                    FieldSize = field.FieldSize,
+                    FieldLocation = field.FieldLocation ?? "-",
+                    Year = targetYear,
+                    CropType = "Няма активен сезон",
+                    ActivityType = "Необработена",
+                    DriverName = "-"
+                });
+                continue;
+            }
+            
+            var latestActivity = currentSeason.Activities?.OrderByDescending(a => a.Date).FirstOrDefault();
+
+            string driverName = "-";
+            string activityName = "Необработена";
+            DateTimeOffset? activityDate = null;
+            string activityNotes = "";
+
+            if (latestActivity != null)
+            {
+                activityName = GetOperationNameBg((int)latestActivity.Type);
+                driverName = latestActivity.DriverName ?? $"ID: {latestActivity.DriverId}";
+                activityDate = latestActivity.Date;
+                activityNotes = latestActivity.Notes ?? "";
+            }
+
             result.Add(new FieldReportDto
             {
                 FieldName = field.FieldName,
                 FieldSize = field.FieldSize,
-                FieldLocation = field.FieldLocation,
-                Year = 0,
-                CropType = "N/A"
+                FieldLocation = field.FieldLocation ?? "-",
+                Year = currentSeason.Year,
+                CropType = GetCropNameBg((int)currentSeason.CropType),
+                ActivityType = activityName,
+                DriverName = driverName,
+                ActivityDate = activityDate,
+                ActivityNotes = activityNotes
             });
-            continue;
         }
 
-        foreach (var season in field.Seasons)
+        return result;
+    }
+    
+
+    private string GetCropNameBg(int cropValue)
+    {
+        return cropValue switch
         {
-            var driverNames = season.Activities != null && season.Activities.Any()
-                ? string.Join(", ", season.Activities
-                    .Select(a => a.DriverName ?? $"ID: {a.DriverId}") 
-                    .Distinct())
-                : "No driver";
-
-            var activityNames = season.Activities != null && season.Activities.Any()
-                ? string.Join(", ", season.Activities.Select(a => a.Type.ToString()))
-                : "No activities";
-
-
-            var lastActivityDate = season.Activities?.OrderByDescending(a => a.Date).FirstOrDefault()?.Date;
-            
-
-            var dto = new FieldReportDto
-            {
-                FieldName = field.FieldName,
-                FieldSize = field.FieldSize,
-                FieldLocation = field.FieldLocation,
-                
-                Year = season.Year,
-                CropType = season.CropType.ToString(),
-                
-                ActivityType = activityNames,
-                DriverName = driverNames,
-                ActivityDate = lastActivityDate,
-                
-                
-                ActivityNotes = season.Activities?.FirstOrDefault(a => !string.IsNullOrEmpty(a.Notes))?.Notes ?? ""
-            };
-            
-            result.Add(dto);
-        }
+            1 => "Пшеница",
+            2 => "Ръж",
+            3 => "Грах",
+            4 => "Фацелия",
+            5 => "Слънчоглед",
+            6 => "Царевица",
+            7 => "Угар (Празно)",
+            8 => "Люцерна",
+            9 => "Изкуствени ливади",
+            _ => "Неизвестно"
+        };
     }
 
-    return result;
-}
+    private string GetOperationNameBg(int opValue)
+    {
+        return opValue switch
+        {
+            1 => "Изорана",
+            2 => "Посята",
+            3 => "Наторена",
+            4 => "Напръскана",
+            5 => "Ожъната / Окосена",
+            6 => "Издискована",
+            7 => "Няма",
+            _ => "Необработена"
+        };
+    }
 }

@@ -74,6 +74,22 @@ public class FieldRepository : IFieldRepository
         await _context.SaveChangesAsync();
         return field;
     }
+
+    public async Task<FieldEntity?> UpdateBoundaryAsync(int id, UpdateFieldBoundaryDto dto)
+    {
+        var field = await _context.Fields.FirstOrDefaultAsync(x => x.Id == id);
+        
+        if (field == null)
+        {
+            return null;
+        }
+        
+        field.UpdateBoundary(dto.BoundaryJson, dto.CalculatedSize);
+        await _context.SaveChangesAsync();
+        
+        return field;
+    }
+
     public async Task<List<FieldEntity>> GetAllWithSeasonsAsync()
     {
         return await _context.Fields

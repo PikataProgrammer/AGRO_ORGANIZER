@@ -13,7 +13,8 @@ public class FieldEntity
     public decimal FieldSize { get; private set; }
     public string? FieldLocation { get; private set; }
     public DateTimeOffset CreatedOn { get; private set; }
-
+    
+    public string? BoundaryJson { get; private set; }
     public int UserId { get; private set; }
     [ForeignKey("UserId")]
     public UserEntity User { get; private set; }
@@ -44,5 +45,21 @@ public class FieldEntity
         FieldLocation = dto.FieldLocation;
         CreatedOn = dto.CreatedOn;
         UserId = dto.UserId;
+    }
+    
+    public void UpdateBoundary(string? json, decimal? calculatedSize = null) 
+    {
+        if (string.IsNullOrEmpty(json) || json == "null" || json == "[]")
+        {
+            BoundaryJson = null;
+        }
+        else
+        {
+            BoundaryJson = json;
+        }
+        if (calculatedSize.HasValue && calculatedSize.Value > 0)
+        {
+            FieldSize = calculatedSize.Value;
+        }
     }
 }

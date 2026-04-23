@@ -13,7 +13,7 @@ public class FieldDto
     public string FieldName { get;  set; }
     public decimal FieldSize { get;  set; }
     public string? FieldLocation { get;  set; }
-    
+    public string? BoundaryJson { get; set; }
     public DateTimeOffset? CreatedOn { get; set; } 
     public ContractDto.ContractDto? Contract { get; set; }
     public ICollection<FieldSeasonDto.FieldSeasonDto> Seasons { get; set; }
@@ -27,6 +27,8 @@ public class FieldDto
         FieldLocation = field.FieldLocation;
         UserId = field.UserId;
         CreatedOn = field.CreatedOn;
+        
+        BoundaryJson = field.BoundaryJson;
         Seasons = new List<FieldSeasonDto.FieldSeasonDto>();
         foreach (var season in field.Seasons)
         {

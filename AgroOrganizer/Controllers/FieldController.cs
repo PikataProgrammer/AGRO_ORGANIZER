@@ -19,6 +19,19 @@ public class FieldController
 
         app.MapPut(baseRoute + "/{id:int}", async (IFieldService service, int id, CreateFieldRequestDto dto)
             => Results.Ok(await service.UpdateFieldAsync(id, dto))).WithName("UpdateField").WithTags("Field");
+        
+        app.MapPut(baseRoute + "/{id:int}/boundary", async (IFieldService service, int id, UpdateFieldBoundaryDto dto) =>
+        {
+            try
+            {
+                var result = await service.UpdateBoundaryAsync(id, dto);
+                return Results.Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return Results.BadRequest(new { message = ex.Message });
+            }
+        }).WithName("UpdateFieldBoundary").WithTags("Field");
 
         app.MapDelete(baseRoute + "/{id:int}", async (IFieldService service, int id)
             => Results.Ok(await service.DeleteFieldAsync(id))).WithName("DeleteField").WithTags("Field");

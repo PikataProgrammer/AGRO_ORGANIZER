@@ -52,7 +52,19 @@ public class FieldService : IFieldService
         var deletedField = await _fieldRepository.DeleteFieldAsync(fieldId);
         return  deletedField != null;
     }
-    
+
+    public async Task<FieldDto> UpdateBoundaryAsync(int id, UpdateFieldBoundaryDto dto)
+    {
+        var updatedField = await _fieldRepository.UpdateBoundaryAsync(id, dto);
+        
+        if (updatedField == null)
+        {
+            throw new NotFoundException($"Field with id {id} not found");
+        }
+        
+        return new FieldDto(updatedField);
+    }
+
     public async Task<List<FieldDto>> GetAllFieldsWithSeasons()
     {
         var fields = await _fieldRepository.GetAllWithSeasonsAsync();

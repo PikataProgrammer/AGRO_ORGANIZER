@@ -136,6 +136,9 @@ namespace AgroOrganizer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<string>("BoundaryJson")
+                        .HasColumnType("longtext");
+
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("datetime");
 
