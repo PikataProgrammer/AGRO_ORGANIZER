@@ -47,6 +47,7 @@ builder.Services.AddCors(options =>
             .AllowCredentials();
     });
 });
+builder.Services.AddMemoryCache();
 //Services
 builder.Services.AddScoped<IMailService, MailService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
@@ -60,6 +61,7 @@ builder.Services.AddScoped<IFieldSeasonService, FieldSeasonDtoService>();
 builder.Services.AddScoped<ISaleService, SaleService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IVehiclesService, VehiclesService>();
+builder.Services.AddHostedService<AgroOrganizer.Services.Market.MarketPriceScraperService>();
 builder.Services.AddScoped<ReportFieldService>();
 builder.Services.AddScoped<ReportExpensesService>();
 builder.Services.AddScoped<IExcelService, ExcelService>();
@@ -98,6 +100,7 @@ SaleController.SetUpSaleRoutes(app, "/api/sale");
 UserController.SetUpUserRoutes(app, "/api/user");
 ReportController.SetUpReportRoutes(app, "/api/reports");
 VehicleController.SetUpVehiclesRoutes(app, "/api/vehicles");
+MarketController.SetUpMarketRoutes(app, "/api/market");
 
 if (app.Environment.IsDevelopment())
 {

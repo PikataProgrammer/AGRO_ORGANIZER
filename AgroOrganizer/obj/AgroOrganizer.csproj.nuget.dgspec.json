@@ -62,6 +62,10 @@
               "target": "Package",
               "version": "[6.0.6, )"
             },
+            "HtmlAgilityPack": {
+              "target": "Package",
+              "version": "[1.12.4, )"
+            },
             "JwtSecurityTokenCustom": {
               "target": "Package",
               "version": "[1.0.0.6, )"

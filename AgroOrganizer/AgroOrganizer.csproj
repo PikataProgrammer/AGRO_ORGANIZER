@@ -10,6 +10,7 @@
         <PackageReference Include="Carter.Analyzers" Version="10.0.0" />
         <PackageReference Include="FluentValidation" Version="12.1.1" />
         <PackageReference Include="HT.PDF" Version="6.0.6" />
+        <PackageReference Include="HtmlAgilityPack" Version="1.12.4" />
         <PackageReference Include="JwtSecurityTokenCustom" Version="1.0.0.6" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />

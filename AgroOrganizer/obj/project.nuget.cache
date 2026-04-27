@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "LgDsywP0arc=",
+  "dgSpecHash": "9U29AYX4Ba4=",
   "success": true,
   "projectFilePath": "C:\\аgro-оrganizer\\AgroOrganizer_backend\\AgroOrganizer\\AgroOrganizer.csproj",
   "expectedPackageFiles": [
@@ -12,6 +12,7 @@
     "C:\\Users\\Peter\\.nuget\\packages\\google.protobuf\\3.32.0\\google.protobuf.3.32.0.nupkg.sha512",
     "C:\\Users\\Peter\\.nuget\\packages\\ht.encrypt\\6.0.6\\ht.encrypt.6.0.6.nupkg.sha512",
     "C:\\Users\\Peter\\.nuget\\packages\\ht.pdf\\6.0.6\\ht.pdf.6.0.6.nupkg.sha512",
+    "C:\\Users\\Peter\\.nuget\\packages\\htmlagilitypack\\1.12.4\\htmlagilitypack.1.12.4.nupkg.sha512",
     "C:\\Users\\Peter\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Peter\\.nuget\\packages\\itextsharp.lgplv2.core\\1.8.0\\itextsharp.lgplv2.core.1.8.0.nupkg.sha512",
     "C:\\Users\\Peter\\.nuget\\packages\\jwtsecuritytokencustom\\1.0.0.6\\jwtsecuritytokencustom.1.0.0.6.nupkg.sha512",
