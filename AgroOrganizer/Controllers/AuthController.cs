@@ -36,6 +36,23 @@ public class AuthController
 
             return Results.Ok(result);
         }).WithName("GenerateTokens").WithTags("Auth");
+        
+        app.MapPost(baseRoute + "/logout", (HttpContext context) =>
+        {
+            var isDev = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+            
+            var cookieOptions = new CookieOptions
+            {
+                SameSite = isDev ? SameSiteMode.Unspecified : SameSiteMode.None,
+                Secure = !isDev,
+                HttpOnly = true,
+                IsEssential = true
+            };
+            context.Response.Cookies.Delete("Refresh-Token", cookieOptions);
+            context.Response.Cookies.Delete("Access-Token", cookieOptions); 
+
+            return Results.Ok(new { message = "Успешно излизане" });
+        }).WithName("Logout").WithTags("Auth");
 
         app.MapPost(baseRoute + "/change-password", async (IAuthService service, ChangePasswordRequestDto dto) =>
         {
