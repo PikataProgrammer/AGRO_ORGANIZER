@@ -20,7 +20,7 @@ public class VehiclesService : IVehiclesService
         var vehicle = await _vehicleRepository.GetByIdAsync(vehicleId);
         if (vehicle == null)
         {
-            throw new NotFoundException($"Sale with id {vehicleId} not found");
+            throw new NotFoundException($"Vehicle with id {vehicleId} not found");
         }
         return new VehiclesDto(vehicle);
     }
@@ -43,7 +43,7 @@ public class VehiclesService : IVehiclesService
         var updatedVehicle = await _vehicleRepository.UpdateAsync(vehicleId, salesDto);
         if (updatedVehicle == null)
         {
-            throw new NotFoundException($"Sale with id {vehicleId} not found");
+            throw new NotFoundException($"Vehicle with id {vehicleId} not found");
         }
         
         return new VehiclesDto(updatedVehicle);

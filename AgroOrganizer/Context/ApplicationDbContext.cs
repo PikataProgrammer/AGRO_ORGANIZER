@@ -27,6 +27,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<ExpenseEntity> Expenses => Set<ExpenseEntity>();
     public DbSet<FieldSeasonEntity> FieldSeasons => Set<FieldSeasonEntity>();
     public DbSet<VehicleEntity> Vehicles => Set<VehicleEntity>();
+    public DbSet<VehicleServiceEntity> VehicleServices => Set<VehicleServiceEntity>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

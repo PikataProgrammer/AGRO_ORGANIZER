@@ -11,6 +11,8 @@ public class VehicleEntity
     public int? PurchaseYear { get; private set; }
     public DateTime? LastServiceDate { get; private set; }
     public int? UserId { get; private set; }
+    
+    public ICollection<VehicleServiceEntity> Services { get; private set; } = new List<VehicleServiceEntity>();
 
     public VehicleEntity()
     {

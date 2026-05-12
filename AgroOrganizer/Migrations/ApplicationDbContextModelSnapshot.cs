@@ -282,6 +282,28 @@ namespace AgroOrganizer.Migrations
                     b.ToTable("Vehicles");
                 });
 
+            modelBuilder.Entity("AgroOrganizer.Models.Entities.Vehicles.VehicleServiceEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("ServiceDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("VehicleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VehicleId");
+
+                    b.ToTable("VehicleServices");
+                });
+
             modelBuilder.Entity("AgroOrganizer.Models.Entities.Activity.ActivityEntity", b =>
                 {
                     b.HasOne("AgroOrganizer.Models.Entities.Drivers.DriverEntity", "Driver")
@@ -353,6 +375,15 @@ namespace AgroOrganizer.Migrations
                     b.Navigation("FieldSeason");
                 });
 
+            modelBuilder.Entity("AgroOrganizer.Models.Entities.Vehicles.VehicleServiceEntity", b =>
+                {
+                    b.HasOne("AgroOrganizer.Models.Entities.Vehicles.VehicleEntity", "Vehicle")
+                        .WithMany("Services")
+                        .HasForeignKey("VehicleId");
+
+                    b.Navigation("Vehicle");
+                });
+
             modelBuilder.Entity("AgroOrganizer.Models.Entities.Drivers.DriverEntity", b =>
                 {
                     b.Navigation("Activities");
@@ -377,6 +408,11 @@ namespace AgroOrganizer.Migrations
             modelBuilder.Entity("AgroOrganizer.Models.Entities.User.UserEntity", b =>
                 {
                     b.Navigation("Fields");
+                });
+
+            modelBuilder.Entity("AgroOrganizer.Models.Entities.Vehicles.VehicleEntity", b =>
+                {
+                    b.Navigation("Services");
                 });
 #pragma warning restore 612, 618
         }

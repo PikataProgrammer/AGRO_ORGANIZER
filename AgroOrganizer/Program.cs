@@ -21,6 +21,7 @@ using AgroOrganizer.Services.Mail.Interfaces;
 using AgroOrganizer.Services.Reports;
 using AgroOrganizer.Services.Sales;
 using AgroOrganizer.Services.Vehicles;
+using AgroOrganizer.Services.Vehicles.VehicleMaintenanceService;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -61,6 +62,8 @@ builder.Services.AddScoped<IFieldSeasonService, FieldSeasonDtoService>();
 builder.Services.AddScoped<ISaleService, SaleService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IVehiclesService, VehiclesService>();
+builder.Services.AddScoped<IVehicleMaintenanceService, VehicleMaintenanceService>();
+
 builder.Services.AddHostedService<AgroOrganizer.Services.Market.MarketPriceScraperService>();
 builder.Services.AddScoped<ReportFieldService>();
 builder.Services.AddScoped<ReportExpensesService>();
@@ -77,6 +80,7 @@ builder.Services.AddScoped<IFieldSeasonRepository, FieldSeasonRepository>();
 builder.Services.AddScoped<ISaleRepository, SaleRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
+builder.Services.AddScoped<IVehicleServiceRepository, VehicleServiceRepository>();
 
 builder.Services.AddScoped<IJwtUtils, JwtUtils>();
 
@@ -100,7 +104,9 @@ SaleController.SetUpSaleRoutes(app, "/api/sale");
 UserController.SetUpUserRoutes(app, "/api/user");
 ReportController.SetUpReportRoutes(app, "/api/reports");
 VehicleController.SetUpVehiclesRoutes(app, "/api/vehicles");
+VehicleServiceController.SetUpVehicleServiceRoutes(app, "/api/vehicleservices");
 MarketController.SetUpMarketRoutes(app, "/api/market");
+
 
 if (app.Environment.IsDevelopment())
 {
@@ -110,4 +116,5 @@ if (app.Environment.IsDevelopment())
 
 Console.WriteLine("Now listening on:");
 Console.WriteLine("http://localhost:5236");
+app.UseStaticFiles(); // for reading photos
 app.Run();
