@@ -149,6 +149,10 @@ namespace AgroOrganizer.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("FieldNumber")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<decimal>("FieldSize")
                         .HasColumnType("decimal(18,2)");
 
@@ -191,10 +195,9 @@ namespace AgroOrganizer.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("BuyerName")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("CropType")
+                    b.Property<int?>("CropType")
                         .HasColumnType("int");
 
                     b.Property<DateTimeOffset>("DateSigned")
@@ -203,11 +206,14 @@ namespace AgroOrganizer.Migrations
                     b.Property<int?>("FieldSeasonId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("PriceForKg")
+                    b.Property<decimal?>("PriceForKg")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<double>("Quantity")
+                    b.Property<double?>("Quantity")
                         .HasColumnType("double");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -255,6 +261,9 @@ namespace AgroOrganizer.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime?>("LastServiceDate")
                         .HasColumnType("datetime(6)");

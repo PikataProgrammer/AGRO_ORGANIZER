@@ -10,6 +10,7 @@ public class VehicleEntity
     public string PlateNumber { get; private set; } 
     public int? PurchaseYear { get; private set; }
     public DateTime? LastServiceDate { get; private set; }
+    public string? ImageUrl { get; private set; }
     public int? UserId { get; private set; }
     
     public ICollection<VehicleServiceEntity> Services { get; private set; } = new List<VehicleServiceEntity>();
@@ -27,6 +28,7 @@ public class VehicleEntity
         PurchaseYear = dto.PurchaseYear;
         LastServiceDate = dto.LastServiceDate;
         UserId = dto.UserId;
+        ImageUrl = dto.ImageUrl;
     }
 
     public void Update(CreateVehicleDto dto)
@@ -37,5 +39,11 @@ public class VehicleEntity
         PurchaseYear = dto.PurchaseYear;
         LastServiceDate = dto.LastServiceDate;
         UserId = dto.UserId;
+        ImageUrl = dto.ImageUrl;
+    }
+    
+    public void SetImageUrl(string imageUrl)
+    {
+        ImageUrl = imageUrl;
     }
 }

@@ -9,4 +9,5 @@ public interface IVehiclesService
     Task<VehiclesDto> CreateVehicleAsync(CreateVehicleDto dto);
     Task<VehiclesDto?> UpdateVehicleAsync(int vehicleId, CreateVehicleDto salesDto);
     Task<bool> DeleteVehicleAsync(int vehicleId);
+    Task<bool> UpdateImageUrlAsync(int vehicleId, string imageUrl);
 }

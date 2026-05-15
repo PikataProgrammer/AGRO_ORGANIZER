@@ -9,6 +9,7 @@ namespace AgroOrganizer.Models.Entities.Field;
 public class FieldEntity
 {
     public int Id { get; private set; }
+    public string FieldNumber { get; private set; }
     public string FieldName { get; private set; }
     public decimal FieldSize { get; private set; }
     public string? FieldLocation { get; private set; }
@@ -30,6 +31,7 @@ public class FieldEntity
 
     public FieldEntity(CreateFieldRequestDto fieldDto)
     {
+        FieldNumber = fieldDto.FieldNumber;
         FieldName = fieldDto.FieldName;
         FieldSize = fieldDto.FieldSize;
         FieldLocation = fieldDto.FieldLocation;
@@ -40,6 +42,7 @@ public class FieldEntity
 
     public void Update(CreateFieldRequestDto dto)
     {
+        FieldNumber = dto.FieldNumber;
         FieldName = dto.FieldName;
         FieldSize = dto.FieldSize;
         FieldLocation = dto.FieldLocation;

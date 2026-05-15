@@ -8,4 +8,5 @@ public class CreateVehicleDto
     public int? PurchaseYear { get; set; }
     public DateTime? LastServiceDate { get; set; }
     public int? UserId { get; set; }
+    public string? ImageUrl { get; set; }
 }

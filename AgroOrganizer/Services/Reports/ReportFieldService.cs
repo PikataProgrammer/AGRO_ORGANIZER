@@ -18,7 +18,7 @@ public class ReportFieldService
         _fieldService = fieldService;
     }
 
-    public async Task<MemoryStream?> GenerateFieldExcel()
+    public async Task<MemoryStream?> GenerateFieldExcel(int? cropType)
     {
         var fields = await _fieldService.GetAllFieldsWithSeasons();
 
@@ -28,7 +28,7 @@ public class ReportFieldService
             return null;
         }
 
-        var reportData = FlattenFields(fields);
+        var reportData = FlattenFields(fields,cropType);
 
         if (reportData == null || !reportData.Any())
         {
@@ -49,7 +49,8 @@ public class ReportFieldService
             ExcelFooter = new ExcelFooter { Content = "Генерирана от Агро Дерменджиеви" },
             Columns =
             {
-                { "FieldName", new ExcelColumn { Label = "Нива" } },
+                { "FieldNumber", new ExcelColumn { Label = "КБС"}},
+                { "FieldName", new ExcelColumn { Label = "Име на нива" } },
                 { "FieldSize", new ExcelColumn { Label = "Размер (дка)" } },
                 { "FieldLocation", new ExcelColumn { Label = "Местоположение" } },
                 { "CropType", new ExcelColumn { Label = "Вид култура" } },
@@ -59,7 +60,7 @@ public class ReportFieldService
         };
     }
 
-    public List<FieldReportDto> FlattenFields(List<FieldDto> fields)
+    public List<FieldReportDto> FlattenFields(List<FieldDto> fields, int? cropType)
     {
         var result = new List<FieldReportDto>();
         
@@ -69,10 +70,19 @@ public class ReportFieldService
         {
             var currentSeason = field.Seasons?.FirstOrDefault(s => s.Year == targetYear);
             
+            if (cropType.HasValue)
+            {
+                if (currentSeason == null || (int)currentSeason.CropType != cropType.Value)
+                {
+                    continue; 
+                }
+            }
+            
             if (currentSeason == null)
             {
                 result.Add(new FieldReportDto
                 {
+                    FieldNumber =  field.FieldNumber,
                     FieldName = field.FieldName,
                     FieldSize = field.FieldSize,
                     FieldLocation = field.FieldLocation ?? "-",
@@ -101,6 +111,7 @@ public class ReportFieldService
 
             result.Add(new FieldReportDto
             {
+                FieldNumber = field.FieldNumber,
                 FieldName = field.FieldName,
                 FieldSize = field.FieldSize,
                 FieldLocation = field.FieldLocation ?? "-",

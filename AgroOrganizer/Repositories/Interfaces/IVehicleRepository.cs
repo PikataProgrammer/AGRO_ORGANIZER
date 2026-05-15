@@ -11,4 +11,5 @@ public interface IVehicleRepository
     public Task<VehicleEntity?> UpdateAsync(int id, CreateVehicleDto vehicleDto);
     public Task<VehicleEntity?> DeleteAsync(int id);
     public Task SaveChangesAsync();
+    Task<bool> UpdateImageUrlAsync(int vehicleId, string imageUrl);
 }

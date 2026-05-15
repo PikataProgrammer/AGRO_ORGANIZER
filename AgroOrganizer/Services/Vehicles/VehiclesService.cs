@@ -54,4 +54,9 @@ public class VehiclesService : IVehiclesService
         var deletedVehicle =  await _vehicleRepository.DeleteAsync(vehicleId);
         return deletedVehicle != null;
     }
+
+    public async Task<bool> UpdateImageUrlAsync(int vehicleId, string imageUrl)
+    {
+        return await _vehicleRepository.UpdateImageUrlAsync(vehicleId, imageUrl);
+    }
 }

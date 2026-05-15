@@ -10,6 +10,7 @@ namespace AgroOrganizer.Models.Dtos.FieldDto;
 public class FieldDto
 {
     public int FieldId { get; set; }
+    public string FieldNumber { get; set; }
     public string FieldName { get;  set; }
     public decimal FieldSize { get;  set; }
     public string? FieldLocation { get;  set; }
@@ -22,6 +23,7 @@ public class FieldDto
     public FieldDto(FieldEntity field)
     {
         FieldId = field.Id;
+        FieldNumber = field.FieldNumber;
         FieldName = field.FieldName;
         FieldSize = field.FieldSize;
         FieldLocation = field.FieldLocation;

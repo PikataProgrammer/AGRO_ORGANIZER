@@ -8,11 +8,11 @@ public class SaleEntity
 {
     public int Id { get; private set; }
     public DateTimeOffset DateSigned { get; private set; }
-    public CropTypes CropType { get; private set; }
-    public decimal PriceForKg { get; private set; }
-    public double Quantity { get; private set; }
-    public decimal TotalPrice => PriceForKg * (decimal)Quantity;
-    public string BuyerName { get; private set; }
+    public CropTypes? CropType { get; private set; }
+    public decimal? PriceForKg { get; private set; }
+    public double? Quantity { get; private set; }
+    public decimal TotalPrice { get; private set; }
+    public string? BuyerName { get; private set; }
 
     public int? FieldSeasonId { get; private set; }
     public FieldSeasonEntity FieldSeason { get; private set; }
@@ -27,6 +27,7 @@ public class SaleEntity
         Quantity = requestDto.Quantity;
         BuyerName = requestDto.BuyerName;
         FieldSeasonId = requestDto.FieldSeasonId;
+        TotalPrice = requestDto.TotalPrice;
     }
 
     public void Update(UpdateSalesRequestDto dto)
@@ -37,5 +38,6 @@ public class SaleEntity
         Quantity = dto.Quantity;
         BuyerName = dto.BuyerName;
         FieldSeasonId = dto.FieldSeasonId;
+        TotalPrice = dto.TotalPrice;
     }
 }

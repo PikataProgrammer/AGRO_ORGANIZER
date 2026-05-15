@@ -367,3 +367,4 @@ C:\аgro-оrganizer\AgroOrganizer_backend\AgroOrganizer\obj\Debug\net10.0\AgroOr
 C:\аgro-оrganizer\AgroOrganizer_backend\AgroOrganizer\obj\Debug\net10.0\AgroOrganizer.genruntimeconfig.cache
 C:\аgro-оrganizer\AgroOrganizer_backend\AgroOrganizer\obj\Debug\net10.0\ref\AgroOrganizer.dll
 C:\аgro-оrganizer\AgroOrganizer_backend\AgroOrganizer\bin\Debug\net10.0\HtmlAgilityPack.dll
+C:\аgro-оrganizer\AgroOrganizer_backend\AgroOrganizer\bin\Debug\net10.0\AgroOrganizer.staticwebassets.runtime.json

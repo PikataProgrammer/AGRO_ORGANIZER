@@ -8,6 +8,7 @@ namespace AgroOrganizer.Models.Dtos.FieldDto;
 
 public class CreateFieldRequestDto
 {
+    public string FieldNumber { get; set; }
     public string FieldName { get; set; }
     public decimal FieldSize { get; set; }
     public string? FieldLocation { get; set; }

@@ -1,5 +1,6 @@
 ﻿
 using AgroOrganizer.Services.Reports;
+using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
 namespace AgroOrganizer.Controllers;
@@ -8,9 +9,9 @@ public class ReportController
 {
     public static WebApplication SetUpReportRoutes(WebApplication app, string baseRoute)
     {
-        app.MapGet(baseRoute + "/field/excel", async (ReportFieldService reportFieldService) =>
+        app.MapGet(baseRoute + "/field/excel", async (ReportFieldService reportFieldService, [FromQuery] int? cropType) =>
         {
-            var file = await reportFieldService.GenerateFieldExcel();
+            var file = await reportFieldService.GenerateFieldExcel(cropType);
 
             if (file == null)
             {

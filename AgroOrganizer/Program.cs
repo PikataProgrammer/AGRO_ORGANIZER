@@ -89,6 +89,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 app.UseCors("FrontendPolicy");
+app.UseStaticFiles();
 app.UseMiddleware<JwtMiddleware>();
 
 
@@ -116,5 +117,4 @@ if (app.Environment.IsDevelopment())
 
 Console.WriteLine("Now listening on:");
 Console.WriteLine("http://localhost:5236");
-app.UseStaticFiles(); // for reading photos
 app.Run();

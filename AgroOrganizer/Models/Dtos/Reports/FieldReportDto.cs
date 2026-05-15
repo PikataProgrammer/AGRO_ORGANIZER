@@ -4,7 +4,7 @@ public class FieldReportDto
 {
     public decimal FieldSize { get; set; }
     public string FieldLocation { get; set; }
-
+    public string FieldNumber { get; set; }
     public string FieldName { get; set; }
     public int Year { get; set; }
     public string CropType { get; set; }

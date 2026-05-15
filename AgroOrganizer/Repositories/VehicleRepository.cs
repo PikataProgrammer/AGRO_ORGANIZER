@@ -66,4 +66,14 @@ public class VehicleRepository : IVehicleRepository
     {
         return _context.SaveChangesAsync();
     }
+
+    public async Task<bool> UpdateImageUrlAsync(int vehicleId, string imageUrl)
+    {
+        var vehicle = await _context.Vehicles.FindAsync(vehicleId); 
+        if (vehicle == null) return false;
+
+        vehicle.SetImageUrl(imageUrl);
+        await _context.SaveChangesAsync();
+        return true;
+    }
 }

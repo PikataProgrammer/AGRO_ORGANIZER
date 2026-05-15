@@ -11,6 +11,7 @@ public class VehiclesDto
     public int? PurchaseYear { get; set; }
     public DateTime? LastServiceDate { get; set; }
     public int? UserId { get; set; }
+    public string? ImageUrl { get; set; }
 
     public VehiclesDto(VehicleEntity entity)
     {
@@ -21,5 +22,6 @@ public class VehiclesDto
         PurchaseYear = entity.PurchaseYear;
         LastServiceDate = entity.LastServiceDate;
         UserId = entity.UserId;
+        ImageUrl = entity.ImageUrl;
     }
 }
