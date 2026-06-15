@@ -51,7 +51,7 @@ public class ReportFieldService
             {
                 { "FieldNumber", new ExcelColumn { Label = "КБС"}},
                 { "FieldName", new ExcelColumn { Label = "Име на нива" } },
-                { "FieldSize", new ExcelColumn { Label = "Размер (дка)" } },
+                { "FieldSize", new ExcelColumn { Label = "Размер (хка)" } },
                 { "FieldLocation", new ExcelColumn { Label = "Местоположение" } },
                 { "CropType", new ExcelColumn { Label = "Вид култура" } },
                 { "ActivityType", new ExcelColumn { Label = "Статус" } },
@@ -140,7 +140,7 @@ public class ReportFieldService
             6 => "Царевица",
             7 => "Угар (Празно)",
             8 => "Люцерна",
-            9 => "Изкуствени ливади",
+            9 => "Изкуствени ливади - смесени насаждения",
             _ => "Неизвестно"
         };
     }

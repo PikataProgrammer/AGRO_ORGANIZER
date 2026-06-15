@@ -5,6 +5,7 @@ using AgroOrganizer.Models.Entities.Expense;
 using AgroOrganizer.Models.Entities.Field;
 using AgroOrganizer.Models.Entities.FieldSeason;
 using AgroOrganizer.Models.Entities.Sales;
+using AgroOrganizer.Models.Entities.Storages;
 using AgroOrganizer.Models.Entities.User;
 using AgroOrganizer.Models.Entities.Vehicles;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,10 @@ public class ApplicationDbContext : DbContext
     public DbSet<FieldSeasonEntity> FieldSeasons => Set<FieldSeasonEntity>();
     public DbSet<VehicleEntity> Vehicles => Set<VehicleEntity>();
     public DbSet<VehicleServiceEntity> VehicleServices => Set<VehicleServiceEntity>();
+    
+    public DbSet<GrainStorageBase> GrainStorages => Set<GrainStorageBase>();
+    public DbSet<SeedStorageEntity> SeedStorages => Set<SeedStorageEntity>();
+    public DbSet<SaleStorageEntity> SaleStorages => Set<SaleStorageEntity>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

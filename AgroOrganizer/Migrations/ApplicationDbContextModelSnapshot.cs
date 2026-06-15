@@ -222,6 +222,35 @@ namespace AgroOrganizer.Migrations
                     b.ToTable("Sales");
                 });
 
+            modelBuilder.Entity("AgroOrganizer.Models.Entities.Storages.GrainStorageBase", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("CropType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(21)
+                        .HasColumnType("varchar(21)");
+
+                    b.Property<DateTimeOffset>("LastUpdated")
+                        .HasColumnType("datetime");
+
+                    b.Property<decimal>("QuantityInKg")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GrainStorages");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("GrainStorageBase");
+
+                    b.UseTphMappingStrategy();
+                });
+
             modelBuilder.Entity("AgroOrganizer.Models.Entities.User.UserEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -311,6 +340,26 @@ namespace AgroOrganizer.Migrations
                     b.HasIndex("VehicleId");
 
                     b.ToTable("VehicleServices");
+                });
+
+            modelBuilder.Entity("AgroOrganizer.Models.Entities.Storages.SaleStorageEntity", b =>
+                {
+                    b.HasBaseType("AgroOrganizer.Models.Entities.Storages.GrainStorageBase");
+
+                    b.Property<decimal?>("AverageMoisture")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasDiscriminator().HasValue("SaleStorageEntity");
+                });
+
+            modelBuilder.Entity("AgroOrganizer.Models.Entities.Storages.SeedStorageEntity", b =>
+                {
+                    b.HasBaseType("AgroOrganizer.Models.Entities.Storages.GrainStorageBase");
+
+                    b.Property<decimal?>("GerminationRate")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasDiscriminator().HasValue("SeedStorageEntity");
                 });
 
             modelBuilder.Entity("AgroOrganizer.Models.Entities.Activity.ActivityEntity", b =>

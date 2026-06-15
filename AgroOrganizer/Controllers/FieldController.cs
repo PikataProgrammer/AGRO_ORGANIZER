@@ -8,7 +8,7 @@ public class FieldController
 {
     public static WebApplication SetUpFieldRoutes(WebApplication app, string baseRoute)
     {
-        app.MapGet(baseRoute + "/", async (IFieldService service, int offset = 0, int limit = 10)
+        app.MapGet(baseRoute + "/", async (IFieldService service, int offset = 0, int limit = 1000)
             => Results.Ok(await service.GetAllAsync(offset, limit))).WithName("GetAllFields").WithTags("Field");
 
         app.MapGet(baseRoute + "/{id:int}", async (IFieldService service, int id)

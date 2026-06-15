@@ -20,7 +20,7 @@ public class MarketPriceScraperService : BackgroundService // for mechanisms tha
         {
             _logger.LogInformation("Започва извличане на цени от Зърноборса за всички култури...");
 
-            // 1. ПШЕНИЦА (Тук ползвам твоя точен XPath, който вече знаем, че работи)
+            // 1. ПШЕНИЦА 
             await ScrapeAndCachePriceAsync(
                 url: "https://zarnoborsa.com/stocks/wheat", 
                 cacheKey: "WheatPrice", 

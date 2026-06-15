@@ -12,4 +12,5 @@ public enum CropTypes
     Lucerne = 8, 
     Lawns = 9,
     Wheat_winter = 10,
+    Peas_spring = 11,
 }

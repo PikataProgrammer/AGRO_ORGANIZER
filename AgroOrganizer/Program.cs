@@ -20,6 +20,7 @@ using AgroOrganizer.Services.Mail;
 using AgroOrganizer.Services.Mail.Interfaces;
 using AgroOrganizer.Services.Reports;
 using AgroOrganizer.Services.Sales;
+using AgroOrganizer.Services.Storage;
 using AgroOrganizer.Services.Vehicles;
 using AgroOrganizer.Services.Vehicles.VehicleMaintenanceService;
 using Microsoft.EntityFrameworkCore;
@@ -63,6 +64,7 @@ builder.Services.AddScoped<ISaleService, SaleService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IVehiclesService, VehiclesService>();
 builder.Services.AddScoped<IVehicleMaintenanceService, VehicleMaintenanceService>();
+builder.Services.AddScoped<IGrainStorageService, GrainStorageService>();
 
 builder.Services.AddHostedService<AgroOrganizer.Services.Market.MarketPriceScraperService>();
 builder.Services.AddScoped<ReportFieldService>();
@@ -81,6 +83,7 @@ builder.Services.AddScoped<ISaleRepository, SaleRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
 builder.Services.AddScoped<IVehicleServiceRepository, VehicleServiceRepository>();
+builder.Services.AddScoped<IGrainStorageRepository, GrainStorageRepository>();
 
 builder.Services.AddScoped<IJwtUtils, JwtUtils>();
 
@@ -107,6 +110,7 @@ ReportController.SetUpReportRoutes(app, "/api/reports");
 VehicleController.SetUpVehiclesRoutes(app, "/api/vehicles");
 VehicleServiceController.SetUpVehicleServiceRoutes(app, "/api/vehicleservices");
 MarketController.SetUpMarketRoutes(app, "/api/market");
+StorageController.SetUpStorageRoutes(app, "/api/storage");
 
 
 if (app.Environment.IsDevelopment())
