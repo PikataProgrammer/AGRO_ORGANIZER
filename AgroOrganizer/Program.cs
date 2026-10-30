@@ -93,6 +93,14 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 app.UseCors("FrontendPolicy");
 app.UseStaticFiles();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+
 app.UseMiddleware<JwtMiddleware>();
 
 
@@ -112,12 +120,6 @@ VehicleServiceController.SetUpVehicleServiceRoutes(app, "/api/vehicleservices");
 MarketController.SetUpMarketRoutes(app, "/api/market");
 StorageController.SetUpStorageRoutes(app, "/api/storage");
 
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
 
 Console.WriteLine("Now listening on:");
 Console.WriteLine("http://localhost:5236");
